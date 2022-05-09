@@ -70,10 +70,10 @@ public class UserIT {
     public void createUserValid() throws Exception {
 
         NewUserDto newUserDto = new NewUserDto();
-        newUserDto.setFirstName("Prenom1");
-        newUserDto.setLastName("Nom1");
+        newUserDto.setFirstName("createuser");
+        newUserDto.setLastName("validmailtest");
 
-        newUserDto.setEmail("mail1@mail.com");
+        newUserDto.setEmail("createuservalidmailtest@mail.com");
         newUserDto.setPassword("1111test");
 
         mockMvc
@@ -93,7 +93,7 @@ public class UserIT {
                 .andExpect(status().isCreated());
 
         // Check if new user new user is present in DB
-        Optional<User> check = userRepo.findByEmail("mail1@mail.com");
+        Optional<User> check = userRepo.findByEmail("createuservalidmailtest@mail.com");
         Assertions.assertThat(check.isPresent()).isTrue();
     }
 
