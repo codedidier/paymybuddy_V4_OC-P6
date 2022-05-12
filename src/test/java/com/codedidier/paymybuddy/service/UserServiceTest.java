@@ -255,4 +255,8 @@ class UserServiceTest {
 
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
 }

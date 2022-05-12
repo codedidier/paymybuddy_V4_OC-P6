@@ -15,7 +15,7 @@ public class UserDetailsImpl implements UserDetails {
     /**
      *
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 678692014444437535L;
     private final String userName;
     private final String password;
     private final SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");

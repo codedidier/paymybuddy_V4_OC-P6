@@ -77,11 +77,10 @@ public class ContactIT {
 
         // When valid
         mockMvc
-                .perform(
-                        delete(deleteUrl)
-                                .param("email", "mail3@mail.com")
-                                .with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com"))
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .perform(delete(deleteUrl)
+                        .param("email", "mail3@mail.com")
+                        .with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com"))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isAccepted())
                 .andExpect(view().name("success"));
 

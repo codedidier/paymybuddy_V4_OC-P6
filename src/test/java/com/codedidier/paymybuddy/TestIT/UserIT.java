@@ -36,32 +36,29 @@ public class UserIT {
     UserRepository userRepo;
 
     @Transactional
-    @WithMockUser(username = "mailtest@mail.com", password = "0000test")
+    @WithMockUser(username = "mailtest@mail.com", password = "test")
     @Test
     public void deleteUser() throws Exception {
 
         // When valid
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders.delete("/home/user")
-                                .param("id", "7")
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .perform(MockMvcRequestBuilders.delete("/home/user")
+                        .param("id", "7")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
 
         // When user doesn't exist
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders.delete("/home/user")
-                                .param("id", "7")
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .perform(MockMvcRequestBuilders.delete("/home/user")
+                        .param("id", "7")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
 
         // When csrf token is missing
         mockMvc
-                .perform(
-                        MockMvcRequestBuilders.delete("/home/user")
-                                .param("id", "2")
-                                .with(SecurityMockMvcRequestPostProcessors.user("user")))
+                .perform(MockMvcRequestBuilders.delete("/home/user")
+                        .param("id", "2")
+                        .with(SecurityMockMvcRequestPostProcessors.user("user")))
                 .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
@@ -77,22 +74,21 @@ public class UserIT {
         newUserDto.setPassword("1111test");
 
         mockMvc
-                .perform(
-                        post("/registration/createNewUser")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                                .content(
-                                        "firstName="
-                                                + newUserDto.getFirstName()
-                                                + "&lastName="
-                                                + newUserDto.getLastName()
-                                                + "&email="
-                                                + newUserDto.getEmail()
-                                                + "&password="
-                                                + newUserDto.getPassword())
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .perform(post("/registration/createNewUser")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                        .content(
+                                "firstName="
+                                        + newUserDto.getFirstName()
+                                        + "&lastName="
+                                        + newUserDto.getLastName()
+                                        + "&email="
+                                        + newUserDto.getEmail()
+                                        + "&password="
+                                        + newUserDto.getPassword())
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isCreated());
 
-        // Check if new user new user is present in DB
+        // Check if new user is present in DB
         Optional<User> check = userRepo.findByEmail("createuservalidmailtest@mail.com");
         Assertions.assertThat(check.isPresent()).isTrue();
     }
@@ -127,13 +123,13 @@ public class UserIT {
 
         // When user + pass are valid -> user redirected to /home
         mockMvc
-                .perform(formLogin("/authenticateTheUser").user("mail2@mail.com").password("2222test"))
+                .perform(formLogin("/authenticateTheUser").user("mail2@mail.com").password("test"))
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/home"));
 
         // When user is invalid
         mockMvc
-                .perform(formLogin("/authenticateTheUser").user("mail3@mail.com").password("3333test"))
+                .perform(formLogin("/authenticateTheUser").user("mailmail@mail.com").password("testtest"))
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/showLoginPage?error"));
 
@@ -162,7 +158,7 @@ public class UserIT {
                 .andExpect(MockMvcResultMatchers.model().attribute("theUser", getUserAccountDto));
     }
 
-    @WithMockUser(username = "mail2@mail.com", password = "2222test")
+    @WithMockUser(username = "mail2@mail.com", password = "test")
     @Test
     public void getUserProfileValid() throws Exception {
 
@@ -181,7 +177,7 @@ public class UserIT {
     }
 
     @Transactional
-    @WithMockUser(username = "mail2@mail.com", password = "2222test")
+    @WithMockUser(username = "mail2@mail.com", password = "test")
     @Test
     public void updateUserProfileValid() throws Exception {
 

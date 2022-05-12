@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.model</a> &gt; <span class="el_source">UserModel.java</span></div><h1>UserModel.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.model;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+/** Model for User entity. */
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+public class UserModel {
+
+    private int id;
+
+    private String email;
+
+    private String lastName;
+
+    private String firstName;
+
+    private String password;
+
+    private int balance;
+
+    private String phone;
+
+    private String addressPrefix;
+
+    private String addressNumber;
+
+    private String addressStreet;
+
+    private String zip;
+
+    private String city;
+
+<span class="fc" id="L33">    public UserModel() {</span>
+<span class="fc" id="L34">    }</span>
+
+    public int getId() {
+<span class="fc" id="L37">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L41">        this.id = id;</span>
+<span class="fc" id="L42">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L45">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L49">        this.email = email;</span>
+<span class="fc" id="L50">    }</span>
+
+    public String getLastName() {
+<span class="fc" id="L53">        return lastName;</span>
+    }
+
+    public void setLastName(String lastName) {
+<span class="fc" id="L57">        this.lastName = lastName;</span>
+<span class="fc" id="L58">    }</span>
+
+    public String getFirstName() {
+<span class="fc" id="L61">        return firstName;</span>
+    }
+
+    public void setFirstName(String firstName) {
+<span class="fc" id="L65">        this.firstName = firstName;</span>
+<span class="fc" id="L66">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L69">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L73">        this.password = password;</span>
+<span class="fc" id="L74">    }</span>
+
+    public int getBalance() {
+<span class="nc" id="L77">        return balance;</span>
+    }
+
+    public void setBalance(int balance) {
+<span class="fc" id="L81">        this.balance = balance;</span>
+<span class="fc" id="L82">    }</span>
+
+    public String getPhone() {
+<span class="fc" id="L85">        return phone;</span>
+    }
+
+    public void setPhone(String phone) {
+<span class="fc" id="L89">        this.phone = phone;</span>
+<span class="fc" id="L90">    }</span>
+
+    public String getAddressPrefix() {
+<span class="fc" id="L93">        return addressPrefix;</span>
+    }
+
+    public void setAddressPrefix(String addressPrefix) {
+<span class="fc" id="L97">        this.addressPrefix = addressPrefix;</span>
+<span class="fc" id="L98">    }</span>
+
+    public String getAddressNumber() {
+<span class="fc" id="L101">        return addressNumber;</span>
+    }
+
+    public void setAddressNumber(String addressNumber) {
+<span class="fc" id="L105">        this.addressNumber = addressNumber;</span>
+<span class="fc" id="L106">    }</span>
+
+    public String getAddressStreet() {
+<span class="fc" id="L109">        return addressStreet;</span>
+    }
+
+    public void setAddressStreet(String addressStreet) {
+<span class="fc" id="L113">        this.addressStreet = addressStreet;</span>
+<span class="fc" id="L114">    }</span>
+
+    public String getZip() {
+<span class="fc" id="L117">        return zip;</span>
+    }
+
+    public void setZip(String zip) {
+<span class="fc" id="L121">        this.zip = zip;</span>
+<span class="fc" id="L122">    }</span>
+
+    public String getCity() {
+<span class="fc" id="L125">        return city;</span>
+    }
+
+    public void setCity(String city) {
+<span class="fc" id="L129">        this.city = city;</span>
+<span class="fc" id="L130">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L134">        return &quot;UserModel{&quot; + &quot;id=&quot; + id + &quot;, email='&quot; + email + '\'' + &quot;, lastName='&quot; + lastName + '\''</span>
+                + &quot;, firstName='&quot; + firstName + '\'' + &quot;, password='&quot; + password + '\'' + &quot;, balance=&quot; + balance
+                + &quot;, phone='&quot; + phone + '\'' + &quot;, addressPrefix='&quot; + addressPrefix + '\''
+                + &quot;, addressNumber='&quot; + addressNumber + '\'' + &quot;, addressStreet='&quot; + addressStreet + '\''
+                + &quot;, zip='&quot; + zip + '\'' + &quot;, city='&quot; + city + '\'' + '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -2,6 +2,8 @@ package com.codedidier.paymybuddy.controller;
 
 import java.security.Principal;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,19 +21,18 @@ import com.codedidier.paymybuddy.entity.User;
 import com.codedidier.paymybuddy.model.UserModel;
 import com.codedidier.paymybuddy.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Controller for User account administration.
  *
  * <p>
  * Contains method to delete or update the user account.
  */
-@Slf4j
+
 @Controller
 @RequestMapping("/home")
 public class UserControllerImpl implements UserController {
 
+    private final Logger log = LogManager.getLogger(getClass().getName());
     @Autowired
     private UserService userService;
 

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.service</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.codedidier.paymybuddy.dto.ContactDto;
+import com.codedidier.paymybuddy.entity.User;
+import com.codedidier.paymybuddy.exception.DataAlreadyExistException;
+import com.codedidier.paymybuddy.exception.DataNotFindException;
+import com.codedidier.paymybuddy.model.UserModel;
+import com.codedidier.paymybuddy.repository.UserRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Implementation for UserService. Contains method to create/delete/read/update
+ * user and contact.
+ */
+<span class="fc" id="L27">@Slf4j</span>
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public UserServiceImpl(
+<span class="fc" id="L37">            UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {</span>
+<span class="fc" id="L38">        this.userRepository = userRepository;</span>
+<span class="fc" id="L39">        this.bCryptPasswordEncoder = bCryptPasswordEncoder;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * This method save the given user in DB by calling Dao. this method is used to
+     * create a new user or update an existing user
+     *
+     * @param theUser to save
+     */
+    @Override
+    public void save(UserModel theUser) {
+<span class="fc" id="L50">        log.info(&quot;Saving user : &quot; + theUser);</span>
+<span class="fc" id="L51">        User user = new User();</span>
+<span class="fc" id="L52">        BeanUtils.copyProperties(theUser, user);</span>
+
+        // Hash password using BCrypt
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (theUser.getPassword() != null) {</span>
+<span class="fc" id="L56">            user.setPassword(bCryptPasswordEncoder.encode(theUser.getPassword()));</span>
+        }
+        // Save user using JpaRepository.save
+<span class="fc" id="L59">        userRepository.save(user);</span>
+<span class="fc" id="L60">        log.info(&quot;Successfully saved user.&quot;);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * This method update the user account by calling repository.
+     *
+     * @param theUser to update
+     */
+    @Override
+    public void update(UserModel theUser) {
+<span class="fc" id="L70">        log.info(&quot;Updating user : &quot; + theUser.getEmail());</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (!userRepository.existsById(theUser.getId())) {</span>
+<span class="fc" id="L72">            log.warn(&quot;ERROR DataNotFindException - Can't find account for user: &quot; + theUser.getEmail());</span>
+<span class="fc" id="L73">            throw new DataNotFindException(&quot;Can't find account for user: &quot; + theUser.getEmail());</span>
+        }
+        // Copy non null field from user model to user entity
+<span class="fc" id="L76">        User userEntity = userRepository.getById(theUser.getId());</span>
+
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">        if (theUser.getFirstName() != null &amp;&amp; !theUser.getFirstName().isBlank()) {</span>
+<span class="fc" id="L79">            log.trace(&quot;Updating : firstName&quot;);</span>
+<span class="fc" id="L80">            userEntity.setFirstName(theUser.getFirstName());</span>
+        }
+
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">        if (theUser.getLastName() != null &amp;&amp; !theUser.getLastName().isBlank()) {</span>
+<span class="fc" id="L84">            log.trace(&quot;Updating : lastName&quot;);</span>
+<span class="fc" id="L85">            userEntity.setLastName(theUser.getLastName());</span>
+        }
+
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">        if (theUser.getEmail() != null &amp;&amp; !theUser.getEmail().isBlank()) {</span>
+<span class="fc" id="L89">            log.trace(&quot;Updating : email&quot;);</span>
+<span class="fc" id="L90">            userEntity.setEmail(theUser.getEmail());</span>
+        }
+
+<span class="pc bpc" id="L93" title="3 of 4 branches missed.">        if (theUser.getPassword() != null &amp;&amp; !theUser.getPassword().isBlank()) {</span>
+<span class="nc" id="L94">            log.trace(&quot;Updating : password&quot;);</span>
+<span class="nc" id="L95">            userEntity.setPassword(bCryptPasswordEncoder.encode(theUser.getPassword()));</span>
+        }
+<span class="pc bpc" id="L97" title="3 of 4 branches missed.">        if (theUser.getPhone() != null &amp;&amp; !theUser.getPhone().isBlank()) {</span>
+<span class="nc" id="L98">            log.trace(&quot;Updating : phone&quot;);</span>
+<span class="nc" id="L99">            userEntity.setPhone(theUser.getPhone());</span>
+        }
+
+<span class="pc bpc" id="L102" title="3 of 4 branches missed.">        if (theUser.getAddressPrefix() != null &amp;&amp; !theUser.getAddressPrefix().isBlank()) {</span>
+<span class="nc" id="L103">            log.trace(&quot;Updating : addressPrefix&quot;);</span>
+<span class="nc" id="L104">            userEntity.setAddressPrefix(theUser.getAddressPrefix());</span>
+        }
+<span class="pc bpc" id="L106" title="3 of 4 branches missed.">        if (theUser.getAddressStreet() != null &amp;&amp; !theUser.getAddressStreet().isBlank()) {</span>
+<span class="nc" id="L107">            log.trace(&quot;Updating : addressStreet&quot;);</span>
+<span class="nc" id="L108">            userEntity.setAddressStreet(theUser.getAddressStreet());</span>
+        }
+<span class="pc bpc" id="L110" title="3 of 4 branches missed.">        if (theUser.getAddressStreet() != null &amp;&amp; !theUser.getAddressNumber().isBlank()) {</span>
+<span class="nc" id="L111">            log.trace(&quot;Updating : addressNumber&quot;);</span>
+<span class="nc" id="L112">            userEntity.setAddressNumber(theUser.getAddressNumber());</span>
+        }
+<span class="pc bpc" id="L114" title="3 of 4 branches missed.">        if (theUser.getCity() != null &amp;&amp; !theUser.getCity().isBlank()) {</span>
+<span class="nc" id="L115">            log.trace(&quot;Updating : city&quot;);</span>
+<span class="nc" id="L116">            userEntity.setCity(theUser.getCity());</span>
+        }
+
+<span class="pc bpc" id="L119" title="3 of 4 branches missed.">        if (theUser.getZip() != null &amp;&amp; !theUser.getZip().isBlank()) {</span>
+<span class="nc" id="L120">            log.trace(&quot;Updating : zip&quot;);</span>
+<span class="nc" id="L121">            userEntity.setZip(theUser.getZip());</span>
+        }
+
+<span class="fc" id="L124">        userRepository.save(userEntity);</span>
+<span class="fc" id="L125">        log.info(&quot;Successfully updated user.&quot;);</span>
+<span class="fc" id="L126">    }</span>
+
+    /**
+     * This method will delete an user from database with its id.
+     *
+     * @param theId of the user to delete
+     */
+    @Override
+    public void deleteUserById(int theId) {
+<span class="fc" id="L135">        log.info(&quot;Deleting user with id : &quot; + theId);</span>
+        // Check if user exist
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (!userRepository.existsById(theId)) {</span>
+<span class="fc" id="L138">            log.warn(&quot;ERROR DataNotFindException - can't find user with id: &quot; + theId);</span>
+<span class="fc" id="L139">            throw new DataNotFindException(&quot;KO - can't find user with id: &quot; + theId);</span>
+        }
+        // Delete user
+<span class="fc" id="L142">        userRepository.deleteById(theId);</span>
+<span class="fc" id="L143">        log.info(&quot;Successfully deleted user.&quot;);</span>
+<span class="fc" id="L144">    }</span>
+
+    /**
+     * This method will return an user from repository based on its id.
+     *
+     * @param theId of the user retrieve
+     * @return the user
+     */
+    @Override
+    public Optional&lt;User&gt; findById(int theId) {
+<span class="nc" id="L154">        return userRepository.findById(theId);</span>
+    }
+
+    /**
+     * This method will return an user from repository based on its email.
+     *
+     * @param email of the user to retrieve
+     * @return the user
+     */
+    @Override
+    public Optional&lt;User&gt; findByEmail(String email) {
+<span class="fc" id="L165">        return userRepository.findByEmail(email);</span>
+    }
+
+    /**
+     * This method will add a new contact to the contact list of the current user
+     * using repository.
+     *
+     * @param contactEmail the email of the contact to add
+     * @param userEmail    the email of the current user
+     */
+    @Override
+    public void addNewContact(String contactEmail, String userEmail) {
+
+<span class="fc" id="L178">        log.info(&quot;Saving contact : &quot; + contactEmail + &quot; - user : &quot; + userEmail);</span>
+
+        // check if user for contactEmail exist
+<span class="fc" id="L181">        Optional&lt;User&gt; contactOp = userRepository.findByEmail(contactEmail);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (contactOp.isEmpty()) {</span>
+<span class="fc" id="L183">            log.warn(&quot;ERROR DataNotFindException - can't find user: &quot; + contactEmail);</span>
+<span class="fc" id="L184">            throw new DataNotFindException(&quot;KO - can't find user: &quot; + contactEmail);</span>
+        }
+<span class="fc" id="L186">        User contact = contactOp.get();</span>
+
+        // check if contact already exist in userContactList
+<span class="fc" id="L189">        User user = userRepository.findByEmail(userEmail).get();</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (user.getContacts().contains(contact)) {</span>
+<span class="fc" id="L191">            log.warn(</span>
+                    &quot;ERROR DataAlreadyExistException - This contact is already linked, contact: &quot;
+                            + contactEmail);
+<span class="fc" id="L194">            throw new DataAlreadyExistException(</span>
+                    &quot;KO - This contact is already linked, contact: &quot; + contactEmail);
+        }
+
+        // save and return firstName and lastName of contact
+<span class="fc" id="L199">        user.getContacts().add(contact);</span>
+<span class="fc" id="L200">        userRepository.save(user);</span>
+<span class="fc" id="L201">        log.info(&quot;Successfully added contact.&quot;);</span>
+<span class="fc" id="L202">    }</span>
+
+    /**
+     * This method will delete the given contact from the contact list of the
+     * current user
+     *
+     * @param email     the email of the contact to delete from list
+     * @param userEmail the email of the current user
+     */
+    @Override
+    public void deleteContact(String email, String userEmail) {
+<span class="fc" id="L213">        log.info(&quot;Deleting contact : &quot; + email + &quot; - user : &quot; + userEmail);</span>
+        // get current user
+<span class="fc" id="L215">        User user = userRepository.findByEmail(userEmail).get();</span>
+
+        // check if contact is present in contactList
+<span class="fc" id="L218">        Set&lt;User&gt; contactList = user.getContacts();</span>
+<span class="fc" id="L219">        User userToDelete = new User();</span>
+<span class="fc" id="L220">        boolean deleted = false;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        for (User contact : contactList) {</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">            if (Objects.equals(contact.getEmail(), email)) {</span>
+                // create dto of contact for return
+
+<span class="fc" id="L225">                deleted = true;</span>
+                // remove contact from list
+<span class="fc" id="L227">                userToDelete = contact;</span>
+            }
+<span class="fc" id="L229">        }</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (!deleted) {</span>
+<span class="fc" id="L231">            log.warn(&quot;ERROR DataNotFindException - can't find user with email: &quot; + email);</span>
+<span class="fc" id="L232">            throw new DataNotFindException(&quot;Error - can't find user with email: &quot; + email);</span>
+        }
+<span class="fc" id="L234">        contactList.remove(userToDelete);</span>
+        // save
+<span class="fc" id="L236">        userRepository.save(user);</span>
+<span class="fc" id="L237">        log.info(&quot;Successfully removed contact.&quot;);</span>
+<span class="fc" id="L238">    }</span>
+
+    /**
+     * This method returns a collection of all the contacts of the given user.
+     *
+     * @param userEmail the user email.
+     * @return all the contacts
+     */
+    @Override
+    public Collection&lt;ContactDto&gt; getAllContact(String userEmail) {
+<span class="fc" id="L248">        log.info(&quot;Getting all contact for user : &quot; + userEmail);</span>
+        // Get User from repo
+<span class="fc" id="L250">        Optional&lt;User&gt; optionalUser = userRepository.findByEmail(userEmail);</span>
+<span class="fc" id="L251">        User user = new User();</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">        if (optionalUser.isPresent()) {</span>
+<span class="fc" id="L253">            user = optionalUser.get();</span>
+        }
+
+        // Get contact List
+<span class="fc" id="L257">        Set&lt;User&gt; contactList = user.getContacts();</span>
+
+        // Map every contact to its ContactDto
+<span class="fc" id="L260">        Collection&lt;ContactDto&gt; dtoCollection = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        for (User contact : contactList) {</span>
+<span class="fc" id="L262">            ContactDto temp = new ContactDto(contact.getFirstName(), contact.getLastName(), contact.getEmail());</span>
+<span class="fc" id="L263">            dtoCollection.add(temp);</span>
+<span class="fc" id="L264">        }</span>
+<span class="fc" id="L265">        log.info(&quot;Returning &quot; + dtoCollection.size() + &quot; contacts.&quot;);</span>
+        // return a collection of ContactDto
+<span class="fc" id="L267">        return dtoCollection;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

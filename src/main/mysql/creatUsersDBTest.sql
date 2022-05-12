@@ -56,14 +56,14 @@ VALUES ('2', '5');
 -- -----------------------------------------------------
 INSERT INTO `pay_my_buddy_test`.`transaction` (`id`, `user_debtor_id`, `user_creditor_id`, `description`, `amount`,
                                                `date`)
-VALUES ('1', '2', '3', 'gazon', '20', '2022-05-08 11:59:00');
+VALUES ('1', '2', '3', 'gazon', '20', '2022-05-02 11:59:00');
 INSERT INTO `pay_my_buddy_test`.`transaction` (`id`, `user_debtor_id`, `user_creditor_id`, `description`, `amount`,
                                                `date`)
-VALUES ('2', '2', '4', 'tabac', '50', '2022-05-08 12:59:00');
+VALUES ('2', '2', '4', 'tabac', '50', '2022-05-02 12:59:00');
 INSERT INTO `pay_my_buddy_test`.`transaction` (`id`, `user_debtor_id`, `user_creditor_id`, `description`, `amount`,
                                                `date`)
-VALUES ('3', '8', '2', 'préparatif anniv', '10000', '2022-05-08 12:59:20');
+VALUES ('3', '8', '2', 'préparatif anniv', '10000', '2022-05-02 12:59:20');
 INSERT INTO `pay_my_buddy_test`.`transaction` (`id`, `user_debtor_id`, `user_creditor_id`, `description`, `amount`,
                                                `date`)
-VALUES ('4', '2', '3', 'fleurs', '40', '2022-05-08 14:39:50');
+VALUES ('4', '2', '3', 'fleurs', '40', '2022-05-02 14:39:50');
 

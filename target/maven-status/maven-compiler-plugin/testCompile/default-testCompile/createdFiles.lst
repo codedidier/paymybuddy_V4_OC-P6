@@ -1,0 +1,6 @@
+com\codedidier\paymybuddy\TestIT\ContactIT.class
+com\codedidier\paymybuddy\TestIT\TransferIT.class
+com\codedidier\paymybuddy\Repository\TestIT\TransferRepo.class
+com\codedidier\paymybuddy\service\UserServiceTest.class
+com\codedidier\paymybuddy\TestIT\UserIT.class
+com\codedidier\paymybuddy\service\TransferServiceImplTest.class

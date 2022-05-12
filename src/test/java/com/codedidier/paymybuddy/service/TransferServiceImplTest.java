@@ -240,7 +240,7 @@ class TransferServiceImplTest {
         // GIVEN
         User user = new User();
         user.setId(5);
-        List<Transfer> transfers1 = new ArrayList();
+        List<Transfer> transfers1 = new ArrayList<Transfer>();
         for (int i = 1; i < 5; i++) {
             Transfer transfer = new Transfer();
             transfer.setId(i);
@@ -253,7 +253,7 @@ class TransferServiceImplTest {
             transfer.setDebtor(debtor);
             transfers1.add(transfer);
         }
-        List<Transfer> transfers2 = new ArrayList();
+        List<Transfer> transfers2 = new ArrayList<Transfer>();
         for (int i = 5; i < 7; i++) {
             Transfer transfer = new Transfer();
             transfer.setId(i);

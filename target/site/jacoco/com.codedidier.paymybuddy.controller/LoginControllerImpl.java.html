@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginControllerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.controller</a> &gt; <span class="el_source">LoginControllerImpl.java</span></div><h1>LoginControllerImpl.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/**
+ * Implementation for LoginController.
+ *
+ * &lt;p&gt;
+ * Contain method to return the welcome page and the login page.
+ */
+@Controller
+<span class="fc" id="L13">public class LoginControllerImpl implements LoginController {</span>
+
+    /**
+     * This method will return the welcome page of the app. This page doesn't need
+     * authentication.
+     *
+     * @return the html page
+     */
+    @Override
+    @GetMapping(&quot;/&quot;)
+    public String welcomePage() {
+
+<span class="nc" id="L25">        return &quot;welcome-page&quot;;</span>
+    }
+
+    /**
+     * This method will return the login page of the app where user can
+     * sign-up/sign-in.
+     *
+     * @return the html page.
+     */
+    @Override
+    @GetMapping(&quot;/showLoginPage&quot;)
+    public String showLoginPage() {
+
+<span class="nc" id="L38">        return &quot;plain-login&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

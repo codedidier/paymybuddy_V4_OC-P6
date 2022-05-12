@@ -22,6 +22,7 @@ public class NewUserDto {
     private String firstName;
     @NotBlank
     private String password;
+
     private String phone;
 
     private String addressPrefix;

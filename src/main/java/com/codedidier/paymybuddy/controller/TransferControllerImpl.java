@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,8 +26,6 @@ import com.codedidier.paymybuddy.dto.NewTransferDto;
 import com.codedidier.paymybuddy.service.TransferService;
 import com.codedidier.paymybuddy.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Implementation for TransferController.
  *
@@ -33,11 +33,10 @@ import lombok.extern.slf4j.Slf4j;
  * Contains method to add/remove currency from user balance. Contains method to
  * create a new transaction and get all transfer for the authenticated user.
  */
-@Slf4j
 @Controller
 @RequestMapping("/home")
 public class TransferControllerImpl implements TransferController {
-
+    private final Logger log = LogManager.getLogger(getClass().getName());
     @Autowired
     TransferService transferService;
     @Autowired

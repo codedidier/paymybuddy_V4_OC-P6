@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GetUserAccountDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.dto</a> &gt; <span class="el_source">GetUserAccountDto.java</span></div><h1>GetUserAccountDto.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.dto;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+/**
+ * Dto of user account.
+ *
+ * &lt;p&gt;
+ * Contains field for account controller.
+ */
+<span class="fc" id="L14">public class GetUserAccountDto {</span>
+
+    private int id;
+
+    private String email;
+
+    private String lastName;
+
+    private String firstName;
+
+    private BigDecimal balance;
+
+    private String phone;
+
+    private String addressPrefix;
+
+    private String addressNumber;
+
+    private String addressStreet;
+
+    private String zip;
+
+    private String city;
+
+    private LocalDateTime lastUpdate;
+
+    public int getId() {
+<span class="fc" id="L41">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L45">        this.id = id;</span>
+<span class="fc" id="L46">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L49">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L53">        this.email = email;</span>
+<span class="fc" id="L54">    }</span>
+
+    public String getLastName() {
+<span class="fc" id="L57">        return lastName;</span>
+    }
+
+    public void setLastName(String lastName) {
+<span class="fc" id="L61">        this.lastName = lastName;</span>
+<span class="fc" id="L62">    }</span>
+
+    public String getFirstName() {
+<span class="fc" id="L65">        return firstName;</span>
+    }
+
+    public void setFirstName(String firstName) {
+<span class="fc" id="L69">        this.firstName = firstName;</span>
+<span class="fc" id="L70">    }</span>
+
+    public BigDecimal getBalance() {
+<span class="fc" id="L73">        return balance;</span>
+    }
+
+    public void setBalance(BigDecimal balance) {
+<span class="fc" id="L77">        this.balance = balance.setScale(2, RoundingMode.HALF_DOWN);</span>
+<span class="fc" id="L78">    }</span>
+
+    public String getPhone() {
+<span class="fc" id="L81">        return phone;</span>
+    }
+
+    public void setPhone(String phone) {
+<span class="fc" id="L85">        this.phone = phone;</span>
+<span class="fc" id="L86">    }</span>
+
+    public String getAddressPrefix() {
+<span class="fc" id="L89">        return addressPrefix;</span>
+    }
+
+    public void setAddressPrefix(String addressPrefix) {
+<span class="fc" id="L93">        this.addressPrefix = addressPrefix;</span>
+<span class="fc" id="L94">    }</span>
+
+    public String getAddressNumber() {
+<span class="fc" id="L97">        return addressNumber;</span>
+    }
+
+    public void setAddressNumber(String addressNumber) {
+<span class="fc" id="L101">        this.addressNumber = addressNumber;</span>
+<span class="fc" id="L102">    }</span>
+
+    public String getAddressStreet() {
+<span class="fc" id="L105">        return addressStreet;</span>
+    }
+
+    public void setAddressStreet(String addressStreet) {
+<span class="fc" id="L109">        this.addressStreet = addressStreet;</span>
+<span class="fc" id="L110">    }</span>
+
+    public String getZip() {
+<span class="fc" id="L113">        return zip;</span>
+    }
+
+    public void setZip(String zip) {
+<span class="fc" id="L117">        this.zip = zip;</span>
+<span class="fc" id="L118">    }</span>
+
+    public String getCity() {
+<span class="fc" id="L121">        return city;</span>
+    }
+
+    public void setCity(String city) {
+<span class="fc" id="L125">        this.city = city;</span>
+<span class="fc" id="L126">    }</span>
+
+    public LocalDateTime getLastUpdate() {
+<span class="nc" id="L129">        return lastUpdate;</span>
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+<span class="fc" id="L133">        this.lastUpdate = lastUpdate;</span>
+<span class="fc" id="L134">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L139">            return true;</span>
+        }
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L142">            return false;</span>
+        }
+<span class="fc" id="L144">        GetUserAccountDto that = (GetUserAccountDto) o;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        return id == that.id</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(email, that.email)</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(lastName, that.lastName)</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(firstName, that.firstName)</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(balance, that.balance)</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(phone, that.phone)</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(addressPrefix, that.addressPrefix)</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(addressNumber, that.addressNumber)</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(addressStreet, that.addressStreet)</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(zip, that.zip)</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(city, that.city)</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">                &amp;&amp; Objects.equals(lastUpdate, that.lastUpdate);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L161">        return Objects.hash(</span>
+<span class="nc" id="L162">                id,</span>
+                email,
+                lastName,
+                firstName,
+                balance,
+                phone,
+                addressPrefix,
+                addressNumber,
+                addressStreet,
+                zip,
+                city,
+                lastUpdate);
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L178">        return &quot;GetUserAccountDto{&quot; + &quot;id=&quot; + id + &quot;, email='&quot; + email + '\'' + &quot;, lastName='&quot; + lastName</span>
+                + '\'' + &quot;, firstName='&quot; + firstName + '\'' + &quot;, balance=&quot; + balance + &quot;, phone='&quot; + phone
+                + '\'' + &quot;, addressPrefix='&quot; + addressPrefix + '\'' + &quot;, addressNumber='&quot; + addressNumber
+                + '\'' + &quot;, addressStreet='&quot; + addressStreet + '\'' + &quot;, zip='&quot; + zip + '\'' + &quot;, city='&quot;
+                + city + '\'' + &quot;, lastUpdate=&quot; + lastUpdate + '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
