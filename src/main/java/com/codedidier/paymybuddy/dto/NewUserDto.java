@@ -2,6 +2,7 @@ package com.codedidier.paymybuddy.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Dto for user account creation.
@@ -13,14 +14,21 @@ public class NewUserDto {
 
     private final int id = 0;
     private final int balance = 0;
-    @Email
+    @Email(message = "Invalid email format")
+    @NotEmpty(message = "Email can't be empty")
     @NotBlank
     private String email;
+
     @NotBlank
+    @NotEmpty(message = "Last Name can not be empty")
     private String lastName;
+
     @NotBlank
+    @NotEmpty(message = "First Name can not be empty")
     private String firstName;
+
     @NotBlank
+    @NotEmpty(message = "Password can not be empty")
     private String password;
 
     private String phone;

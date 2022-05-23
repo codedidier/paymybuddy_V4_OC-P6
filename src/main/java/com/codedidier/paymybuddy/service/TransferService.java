@@ -23,6 +23,7 @@ public interface TransferService {
      *
      * @param amount the integer to subtract
      * @param email  the email of the current user
+     * @return
      */
     void removeCash(String amount, String email);
 

@@ -1,5 +1,7 @@
 package com.codedidier.paymybuddy.model;
 
+import javax.persistence.Column;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /** Model for User entity. */
@@ -8,6 +10,7 @@ public class UserModel {
 
     private int id;
 
+    @Column(name = "email", unique = true)
     private String email;
 
     private String lastName;

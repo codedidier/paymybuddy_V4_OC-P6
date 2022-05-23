@@ -103,13 +103,9 @@ public class TransferControllerImpl implements TransferController {
         // add principal to dto
         newTransfer.setDebtorEmail(principal.getName());
 
-        log.info(
-                "Creating new transfer - amount : "
-                        + newTransfer.getAmount()
-                        + " - debtor : "
-                        + newTransfer.getDebtorEmail()
-                        + " - creditor : "
-                        + newTransfer.getCreditorEmail());
+        log.info("Creating new transfer - amount : " + newTransfer.getAmount()
+                + " - debtor : " + newTransfer.getDebtorEmail()
+                + " - creditor : " + newTransfer.getCreditorEmail());
         // call service
         transferService.createTransfer(newTransfer);
         // redirect to getTransfer page

@@ -1,5 +1,6 @@
 package com.codedidier.paymybuddy.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -12,8 +13,9 @@ import javax.validation.constraints.NotBlank;
 public class NewTransferDto {
 
     @NotBlank
+    @Email
     private String creditorEmail;
-
+    @Email
     private String debtorEmail;
 
     @Min(0)

@@ -40,16 +40,13 @@ public class TransferIT {
     @Test
     public void requestWhenNotAuthenticated() throws Exception {
         mockMvc.perform(post(addMoneyUrl)).andExpect(status().isForbidden());
-        mockMvc
-                .perform(post(addMoneyUrl).with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(addMoneyUrl).with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isUnauthorized());
         mockMvc.perform(post(removeMoneyUrl)).andExpect(status().isForbidden());
-        mockMvc
-                .perform(post(removeMoneyUrl).with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(removeMoneyUrl).with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isUnauthorized());
         mockMvc.perform(post(createTransferUrl)).andExpect(status().isForbidden());
-        mockMvc
-                .perform(post(createTransferUrl).with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(createTransferUrl).with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isUnauthorized());
         mockMvc.perform(get(readTransferUrl)).andExpect(status().isUnauthorized());
     }
@@ -58,14 +55,12 @@ public class TransferIT {
     public void getTransfers() throws Exception {
 
         // When Valid
-        mockMvc
-                .perform(get(readTransferUrl).with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com")))
+        mockMvc.perform(get(readTransferUrl).with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com")))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("transfers", iterableWithSize(4)));
 
         // When there are no transfers should return emptyList
-        mockMvc
-                .perform(get(readTransferUrl).with(SecurityMockMvcRequestPostProcessors.user("mailtest@mail.com")))
+        mockMvc.perform(get(readTransferUrl).with(SecurityMockMvcRequestPostProcessors.user("mailtest@mail.com")))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("transfers", iterableWithSize(0)));
     }
@@ -74,22 +69,20 @@ public class TransferIT {
     @Test
     public void addCash() throws Exception {
         // When valid
-        mockMvc
-                .perform(post(addMoneyUrl)
-                        .param("amount", "50")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
-                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(addMoneyUrl)
+                .param("amount", "50")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isAccepted())
                 .andExpect(view().name("success"));
 
         // When amount is not valid
-        mockMvc
-                .perform(post(addMoneyUrl)
-                        .param("amount", "-5")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
-                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(addMoneyUrl)
+                .param("amount", "-5")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -97,34 +90,29 @@ public class TransferIT {
     @Test
     public void removeCash() throws Exception {
         // When valid
-        mockMvc
-                .perform(
-                        post(removeMoneyUrl)
-                                .param("amount", "19.99")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(removeMoneyUrl)
+                .param("amount", "19.99")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isAccepted())
                 .andExpect(view().name("success"));
 
         // When valid but amount>balance
-        mockMvc
-                .perform(
-                        post(removeMoneyUrl)
-                                .param("amount", "1")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(post(removeMoneyUrl)
+                .param("amount", "1")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isBadRequest());
 
         // When amount is not valid
-        mockMvc
-                .perform(
-                        post(removeMoneyUrl)
-                                .param("amount", "-5")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                                .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
-                                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+        mockMvc.perform(
+                post(removeMoneyUrl)
+                        .param("amount", "-5")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                        .with(SecurityMockMvcRequestPostProcessors.user("mail3@mail.com"))
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -142,13 +130,11 @@ public class TransferIT {
                 + "&description="
                 + transferDto1.getDescription();
 
-        mockMvc
-                .perform(
-                        post(createTransferUrl)
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                                .content(urlEncoded1)
-                                .with(SecurityMockMvcRequestPostProcessors.csrf())
-                                .with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com")))
+        mockMvc.perform(post(createTransferUrl)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .content(urlEncoded1)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com")))
                 .andExpect(status().isCreated())
                 .andExpect(view().name("success"));
 
@@ -166,13 +152,11 @@ public class TransferIT {
                 + "&description="
                 + transferDto2.getDescription();
 
-        mockMvc
-                .perform(
-                        post(createTransferUrl)
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                                .content(urlEncoded2)
-                                .with(SecurityMockMvcRequestPostProcessors.csrf())
-                                .with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com")))
+        mockMvc.perform(post(createTransferUrl)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .content(urlEncoded2)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+                .with(SecurityMockMvcRequestPostProcessors.user("mail2@mail.com")))
                 .andExpect(status().isBadRequest());
 
         Assertions.assertThat(transferRepo.getTransferByDescription("erreur")).isNull();

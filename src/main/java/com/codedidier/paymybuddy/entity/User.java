@@ -19,6 +19,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Entity for user table.
@@ -48,19 +49,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
+    @NotEmpty(message = "Email can't be empty")
     private String email;
 
     @Column(name = "last_name")
+    @NotEmpty(message = "Last Name can not be empty")
     private String lastName;
 
     @Column(name = "first_name")
+    @NotEmpty(message = "First Name can not be empty")
     private String firstName;
 
     @Column(name = "password")
+    @NotEmpty(message = "Password can not be empty")
     private String password;
 
     @Column(name = "balance")

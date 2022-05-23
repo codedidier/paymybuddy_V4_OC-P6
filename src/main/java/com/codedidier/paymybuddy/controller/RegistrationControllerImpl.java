@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.codedidier.paymybuddy.dto.NewUserDto;
-import com.codedidier.paymybuddy.exception.BadArgumentException;
-import com.codedidier.paymybuddy.exception.DataAlreadyExistException;
 import com.codedidier.paymybuddy.model.UserModel;
 import com.codedidier.paymybuddy.service.UserService;
 
@@ -67,14 +65,16 @@ public class RegistrationControllerImpl implements RegistrationController {
         // Check if there is error in validation
         if (bindingResult.hasErrors()) {
             log.warn(bindingResult.getFieldError());
-            throw new BadArgumentException("KO - error in registration form.");
+            // return view registration-error2
+            return "registration-error2";
         }
 
         // Check if email already exist in DB.
 
         if (userService.findByEmail(newUser.getEmail()).isPresent()) {
             log.error("KO - user: " + newUser.getEmail() + " already exist.");
-            throw new DataAlreadyExistException("KO - user: " + newUser.getEmail() + " already exist.");
+            // return view registration-error
+            return "registration-error";
         }
 
         UserModel user = new UserModel();
@@ -82,7 +82,7 @@ public class RegistrationControllerImpl implements RegistrationController {
         log.trace("savind user : " + user);
         // Create user
         userService.save(user);
-
+        // return view registration-confirmation
         return "registration-confirmation";
     }
 }

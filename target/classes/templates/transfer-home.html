@@ -67,7 +67,7 @@
                       class="form-horizontal" style="width: 50%; align-items: center; ">
                     <div class="row">
                         <label class="col">
-                            <input type="text" name="email" placeholder="example@mail.com" class=" form-control">
+                            <input type="text" name="email" required="required" placeholder="example@mail.com" class=" form-control">
                         </label>
 
                         <div class="col">
@@ -83,8 +83,7 @@
             <div style="padding: 5%; background-color: whitesmoke" class="row">
                 <div class="col form-group">
                     <label>
-                        <select type="text" name="creditorEmail" class="form-control"
-                        >
+                        <select type="text" name="creditorEmail" class="form-control">
                             <option>Select a contact</option>
                             <option th:each="contact: ${contacts}" th:text="${contact.email}"
                                     th:value="${contact.email}">Select a connection
@@ -93,10 +92,10 @@
                     </label>
                 </div>
                 <label class="col">
-                    <input type="text" name="amount" placeholder="amount" class="form-control text-end">
+                    <input type="text" name="amount" required placeholder="amount" class="form-control text-end">
                 </label>
                 <label class="col">
-                    <input type="text" name="description" placeholder="description" class="form-control text-end">
+                    <input type="text" name="description" required placeholder="description" class="form-control text-end">
                 </label>
                 <div class="col">
                     <button type="submit" class="btn btn-primary col-12">Pay</button>

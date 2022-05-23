@@ -24,35 +24,33 @@
 
         <form th:action="@{/registration/createNewUser}" th:object="${newUser}" method="POST" class="form-horizontal">
 
-            <!-- place ofr message: error, alert -->
+            <!-- place form message: error, alert -->
 
 
 
             <!--    firstName   -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                <input type="text" name="firstName" placeholder="first name (*)" class="form-control"/>
+                <input type="text" name="firstName" placeholder="first name (*)" class="form-control" required/>
             </label>
             <!--    lastName    -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                <input type="text" name="lastName" placeholder="last name (*)" class="form-control"/>
+                <input type="text" name="lastName" placeholder="last name (*)" class="form-control" required/>
             </label>
             <!--    email   -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input type="text" name="email" placeholder="email (*)" class="form-control"/>
+                <input type="text" name="email" placeholder="email (*)" class="form-control" required/>
+            
+            
             </label>
             <!--    password    -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                <input type="password" name="password" placeholder="password (*)" class="form-control"/>
+                <input type="password" name="password"  required placeholder="password (*)" class="form-control" />
             </label>
-            <!--    password check  -->
-<!--            <div style="margin-bottom: 20px" class="input-group">-->
-<!--                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>-->
-<!--                <input type="password" name="password" placeholder="confirm password (*)" class=""/>-->
-<!--            </div>-->
+
             <!--    phone   -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
@@ -93,6 +91,9 @@
                 <button type="submit" class="btn btn-primary">Sign-up</button>
             </div>
         </form>
+             <div style="margin-top: 10px; margin-bottom: 10px;">
+            <a th:href="@{/home}" class="btn btn-primary">Retour</a>
+        </div>
     </div>
 </div>
 
