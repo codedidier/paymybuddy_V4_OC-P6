@@ -2,6 +2,7 @@
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Dto for user account creation.
@@ -11,16 +12,23 @@ import javax.validation.constraints.NotBlank;
  */
 public class NewUserDto {
 
-<span class="fc" id="L14">    private final int id = 0;</span>
-<span class="fc" id="L15">    private final int balance = 0;</span>
-    @Email
+<span class="fc" id="L15">    private final int id = 0;</span>
+<span class="fc" id="L16">    private final int balance = 0;</span>
+    @Email(message = &quot;Invalid email format&quot;)
+    @NotEmpty(message = &quot;Email can't be empty&quot;)
     @NotBlank
     private String email;
+
     @NotBlank
+    @NotEmpty(message = &quot;Last Name can not be empty&quot;)
     private String lastName;
+
     @NotBlank
+    @NotEmpty(message = &quot;First Name can not be empty&quot;)
     private String firstName;
+
     @NotBlank
+    @NotEmpty(message = &quot;Password can not be empty&quot;)
     private String password;
 
     private String phone;
@@ -35,100 +43,100 @@ public class NewUserDto {
 
     private String city;
 
-<span class="fc" id="L38">    public NewUserDto() {</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L46">    public NewUserDto() {</span>
+<span class="fc" id="L47">    }</span>
 
     public int getId() {
-<span class="fc" id="L42">        return id;</span>
+<span class="fc" id="L50">        return id;</span>
     }
 
     public String getEmail() {
-<span class="fc" id="L46">        return email;</span>
+<span class="fc" id="L54">        return email;</span>
     }
 
     public void setEmail(String email) {
-<span class="fc" id="L50">        this.email = email;</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L58">        this.email = email;</span>
+<span class="fc" id="L59">    }</span>
 
     public String getLastName() {
-<span class="fc" id="L54">        return lastName;</span>
+<span class="fc" id="L62">        return lastName;</span>
     }
 
     public void setLastName(String lastName) {
-<span class="fc" id="L58">        this.lastName = lastName;</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L66">        this.lastName = lastName;</span>
+<span class="fc" id="L67">    }</span>
 
     public String getFirstName() {
-<span class="fc" id="L62">        return firstName;</span>
+<span class="fc" id="L70">        return firstName;</span>
     }
 
     public void setFirstName(String firstName) {
-<span class="fc" id="L66">        this.firstName = firstName;</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L74">        this.firstName = firstName;</span>
+<span class="fc" id="L75">    }</span>
 
     public String getPassword() {
-<span class="fc" id="L70">        return password;</span>
+<span class="fc" id="L78">        return password;</span>
     }
 
     public void setPassword(String password) {
-<span class="fc" id="L74">        this.password = password;</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L82">        this.password = password;</span>
+<span class="fc" id="L83">    }</span>
 
     public int getBalance() {
-<span class="fc" id="L78">        return balance;</span>
+<span class="fc" id="L86">        return balance;</span>
     }
 
     public String getPhone() {
-<span class="fc" id="L82">        return phone;</span>
+<span class="fc" id="L90">        return phone;</span>
     }
 
     public void setPhone(String phone) {
-<span class="nc" id="L86">        this.phone = phone;</span>
-<span class="nc" id="L87">    }</span>
+<span class="nc" id="L94">        this.phone = phone;</span>
+<span class="nc" id="L95">    }</span>
 
     public String getAddressPrefix() {
-<span class="fc" id="L90">        return addressPrefix;</span>
+<span class="fc" id="L98">        return addressPrefix;</span>
     }
 
     public void setAddressPrefix(String addressPrefix) {
-<span class="nc" id="L94">        this.addressPrefix = addressPrefix;</span>
-<span class="nc" id="L95">    }</span>
+<span class="nc" id="L102">        this.addressPrefix = addressPrefix;</span>
+<span class="nc" id="L103">    }</span>
 
     public String getAddressNumber() {
-<span class="fc" id="L98">        return addressNumber;</span>
+<span class="fc" id="L106">        return addressNumber;</span>
     }
 
     public void setAddressNumber(String addressNumber) {
-<span class="nc" id="L102">        this.addressNumber = addressNumber;</span>
-<span class="nc" id="L103">    }</span>
+<span class="nc" id="L110">        this.addressNumber = addressNumber;</span>
+<span class="nc" id="L111">    }</span>
 
     public String getAddressStreet() {
-<span class="fc" id="L106">        return addressStreet;</span>
+<span class="fc" id="L114">        return addressStreet;</span>
     }
 
     public void setAddressStreet(String addressStreet) {
-<span class="nc" id="L110">        this.addressStreet = addressStreet;</span>
-<span class="nc" id="L111">    }</span>
+<span class="nc" id="L118">        this.addressStreet = addressStreet;</span>
+<span class="nc" id="L119">    }</span>
 
     public String getZip() {
-<span class="fc" id="L114">        return zip;</span>
+<span class="fc" id="L122">        return zip;</span>
     }
 
     public void setZip(String zip) {
-<span class="nc" id="L118">        this.zip = zip;</span>
-<span class="nc" id="L119">    }</span>
+<span class="nc" id="L126">        this.zip = zip;</span>
+<span class="nc" id="L127">    }</span>
 
     public String getCity() {
-<span class="fc" id="L122">        return city;</span>
+<span class="fc" id="L130">        return city;</span>
     }
 
     public void setCity(String city) {
-<span class="nc" id="L126">        this.city = city;</span>
-<span class="nc" id="L127">    }</span>
+<span class="nc" id="L134">        this.city = city;</span>
+<span class="nc" id="L135">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L131">        return &quot;NewUserDto{&quot; + &quot;id=&quot; + id + &quot;, email='&quot; + email + '\'' + &quot;, lastName='&quot; + lastName + '\''</span>
+<span class="fc" id="L139">        return &quot;NewUserDto{&quot; + &quot;id=&quot; + id + &quot;, email='&quot; + email + '\'' + &quot;, lastName='&quot; + lastName + '\''</span>
                 + &quot;, firstName='&quot; + firstName + '\'' + &quot;, password='&quot; + password + '\'' + &quot;, balance=&quot; + balance
                 + &quot;, phone='&quot; + phone + '\'' + &quot;, addressPrefix='&quot; + addressPrefix + '\'' + &quot;, addressNumber='&quot;
                 + addressNumber + '\'' + &quot;, addressStreet='&quot; + addressStreet + '\'' + &quot;, zip='&quot; + zip + '\''

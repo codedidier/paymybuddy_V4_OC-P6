@@ -23,6 +23,16 @@ public class TransferModel {
 
     private User creditor;
 
+    private int charge;
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
+    }
+
     public TransferModel() {
     }
 

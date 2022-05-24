@@ -128,7 +128,9 @@ public class TransferIT {
                 + "&amount="
                 + transferDto1.getAmount()
                 + "&description="
-                + transferDto1.getDescription();
+                + transferDto1.getDescription()
+                + "&charge="
+                + transferDto1.getCharge();
 
         mockMvc.perform(post(createTransferUrl)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)

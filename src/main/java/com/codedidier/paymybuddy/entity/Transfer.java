@@ -41,6 +41,21 @@ public class Transfer {
     @Column(name = "amount")
     private BigDecimal amount;
 
+    @Column(name = "charge")
+    private BigDecimal charge;
+
+    public BigDecimal getCharge() {
+        return charge;
+    }
+
+    public void setCharge(BigDecimal charge) {
+        this.charge = charge;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     @Column(name = "date")
     private LocalDateTime date;
 
@@ -122,8 +137,8 @@ public class Transfer {
 
     @Override
     public String toString() {
-        return "Transfer{" + "id=" + id + ", debtorId=" + debtorId + ", creditorId=" + creditorId + ", description='"
-                + description
-                + '\'' + ", amount=" + amount + ", date=" + date + '}';
+        return "Transfer [id=" + id + ", debtorId=" + debtorId + ", creditorId=" + creditorId + ", description="
+                + description + ", amount=" + amount + ", charge=" + charge + ", date=" + date + ", debtor=" + debtor
+                + ", creditor=" + creditor + "]";
     }
 }

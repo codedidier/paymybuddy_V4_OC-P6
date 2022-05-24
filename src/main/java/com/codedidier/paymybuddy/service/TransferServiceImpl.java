@@ -156,7 +156,7 @@ public class TransferServiceImpl implements TransferService {
             throw new IllegalContactException(
                     "Error - User: " + newTransferDto.getCreditorEmail() + " NOT in contacts.");
         }
-        // add charge to appAccount
+        // add charge to appAccount User1
         User app = userRepository.getById(1);
         app.setBalance(app.getBalance().add(charge));
 
@@ -171,6 +171,7 @@ public class TransferServiceImpl implements TransferService {
         transfer.setCreditorId(creditor.getId());
         transfer.setDebtorId(debtor.getId());
         transfer.setAmount(amount);
+        transfer.setCharge(charge);
         transfer.setDescription(newTransferDto.getDescription());
 
         // save in repository

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.codedidier.paymybuddy.dto.NewUserDto;
-import com.codedidier.paymybuddy.exception.BadArgumentException;
-import com.codedidier.paymybuddy.exception.DataAlreadyExistException;
 import com.codedidier.paymybuddy.model.UserModel;
 import com.codedidier.paymybuddy.service.UserService;
 
@@ -32,12 +30,12 @@ import com.codedidier.paymybuddy.service.UserService;
 public class RegistrationControllerImpl implements RegistrationController {
 
     private final UserService userService;
-<span class="fc" id="L35">    private final Logger log = LogManager.getLogger(getClass().getName());</span>
+<span class="fc" id="L33">    private final Logger log = LogManager.getLogger(getClass().getName());</span>
 
     @Autowired
-<span class="fc" id="L38">    public RegistrationControllerImpl(UserService userService) {</span>
-<span class="fc" id="L39">        this.userService = userService;</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L36">    public RegistrationControllerImpl(UserService userService) {</span>
+<span class="fc" id="L37">        this.userService = userService;</span>
+<span class="fc" id="L38">    }</span>
 
     /**
      * This method return the registration form to create a new user.
@@ -48,9 +46,9 @@ public class RegistrationControllerImpl implements RegistrationController {
     @GetMapping(&quot;/signUp&quot;)
     public String signUp() {
 
-<span class="nc" id="L51">        log.trace(&quot;Returning registration Form.&quot;);</span>
+<span class="nc" id="L49">        log.trace(&quot;Returning registration Form.&quot;);</span>
 
-<span class="nc" id="L53">        return &quot;registration-page&quot;;</span>
+<span class="nc" id="L51">        return &quot;registration-page&quot;;</span>
     }
 
     /**
@@ -63,18 +61,20 @@ public class RegistrationControllerImpl implements RegistrationController {
     @PostMapping(&quot;/createNewUser&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     public String registerNewUser(@Valid NewUserDto newUser, BindingResult bindingResult) {
-<span class="fc" id="L66">        log.trace(&quot;New user :&quot; + newUser);</span>
+<span class="fc" id="L64">        log.trace(&quot;New user :&quot; + newUser);</span>
         // Check if there is error in validation
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (bindingResult.hasErrors()) {</span>
-<span class="nc" id="L69">            log.warn(bindingResult.getFieldError());</span>
-<span class="nc" id="L70">            throw new BadArgumentException(&quot;KO - error in registration form.&quot;);</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L67">            log.warn(bindingResult.getFieldError());</span>
+            // return view registration-error2
+<span class="nc" id="L69">            return &quot;registration-error2&quot;;</span>
         }
 
         // Check if email already exist in DB.
 
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (userService.findByEmail(newUser.getEmail()).isPresent()) {</span>
-<span class="nc" id="L76">            log.error(&quot;KO - user: &quot; + newUser.getEmail() + &quot; already exist.&quot;);</span>
-<span class="nc" id="L77">            throw new DataAlreadyExistException(&quot;KO - user: &quot; + newUser.getEmail() + &quot; already exist.&quot;);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (userService.findByEmail(newUser.getEmail()).isPresent()) {</span>
+<span class="nc" id="L75">            log.error(&quot;KO - user: &quot; + newUser.getEmail() + &quot; already exist.&quot;);</span>
+            // return view registration-error
+<span class="nc" id="L77">            return &quot;registration-error&quot;;</span>
         }
 
 <span class="fc" id="L80">        UserModel user = new UserModel();</span>
@@ -82,7 +82,7 @@ public class RegistrationControllerImpl implements RegistrationController {
 <span class="fc" id="L82">        log.trace(&quot;savind user : &quot; + user);</span>
         // Create user
 <span class="fc" id="L84">        userService.save(user);</span>
-
+        // return view registration-confirmation
 <span class="fc" id="L86">        return &quot;registration-confirmation&quot;;</span>
     }
 }

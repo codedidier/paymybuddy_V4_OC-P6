@@ -84,6 +84,6 @@ public class NewTransferDto {
     @Override
     public String toString() {
         return "NewTransferDto{" + "creditorEmail='" + creditorEmail + '\'' + ", debtorEmail='" + debtorEmail
-                + '\'' + ", amount=" + amount + ", description='" + description + '\'' + '}';
+                + '\'' + ", amount=" + amount + ", description='" + description + ",charge=" + charge + '\'' + '}';
     }
 }

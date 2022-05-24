@@ -26,7 +26,7 @@ public class Transfer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = &quot;id&quot;)
+    @Column(name = &quot;id&quot;, nullable = false)
     private int id;
 
     @Column(name = &quot;user_debtor_id&quot;)
