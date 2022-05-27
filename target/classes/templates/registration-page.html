@@ -41,7 +41,7 @@
             <!--    email   -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input type="text" name="email" placeholder="email (*)" class="form-control" required/>
+                <input type="email" name="email" placeholder="email (*)" class="form-control" required/>
             
             
             </label>
@@ -55,19 +55,21 @@
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
 
-                <input type="text" name="phone" placeholder="phone" class="form-control"/>
+                <input type="tel" name="phone" placeholder="phone ten digit format" pattern="[0-9]{10}"class="form-control"/>
             </label>
-            <!--    address prefix  -->
-            <label style="margin-bottom: 20px" class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 
-                <input type="text" name="addressPrefix" placeholder="ex: rue, st, Bd..." class="form-control"/>
-            </label>
             <!--    address number  -->
             <label style="margin-bottom: 20px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 
-                <input type="text" name="addressNumber" placeholder="address number" class="form-control"/>
+                <input type="number" name="addressNumber" placeholder="address number"value="empty" step="1" min="0" max="999999" class="form-control"/>
+            
+			</label>
+                        <!--    address prefix  -->
+            <label style="margin-bottom: 20px" class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+
+                <input type="text" name="addressPrefix" placeholder="ex: rue, st, Bd..." class="form-control"/>
             </label>
             <!--    address street  -->
             <label style="margin-bottom: 20px" class="input-group">

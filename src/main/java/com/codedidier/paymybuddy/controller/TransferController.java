@@ -2,7 +2,10 @@ package com.codedidier.paymybuddy.controller;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import com.codedidier.paymybuddy.dto.NewTransferDto;
 
@@ -49,4 +52,23 @@ public interface TransferController {
      * @return the view for transfer
      */
     String getTransfers(Model model, Principal principal);
+
+    /**
+     * This method will create a new transfer for the current user and the given
+     * contact.
+     *
+     * @param newTransfer Dto with creditorEmail, amount, description
+     * @param principal   the current user (debtor)
+     * @return success page
+     */
+    String createTransfer(@Valid NewTransferDto newTransfer, Principal principal, BindingResult bindingResult);
+
+    /**
+     * this method will remove cash from the current user balance.
+     *
+     * @param amount    of money to remove
+     * @param principal the current user
+     * @return success page
+     */
+    String removeCash(String amount, Principal principal, BindingResult bindingResult);
 }

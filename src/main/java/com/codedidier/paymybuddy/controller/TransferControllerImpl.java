@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,8 +99,13 @@ public class TransferControllerImpl implements TransferController {
     @PostMapping(value = "/transfer", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public String createTransfer(
-            @Valid @ModelAttribute("newTransfer") NewTransferDto newTransfer, Principal principal) {
-
+            @Valid @ModelAttribute("newTransfer") NewTransferDto newTransfer, Principal principal,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.warn(bindingResult.getFieldError());
+            // return view solde-error
+            return "solde-error";
+        }
         // add principal to dto
         newTransfer.setDebtorEmail(principal.getName());
 
@@ -129,5 +135,17 @@ public class TransferControllerImpl implements TransferController {
         model.addAttribute("contacts", contacts);
         log.trace("user : " + principal.getName() + " have : " + transfers.size() + " transfers.");
         return "transfer-home";
+    }
+
+    @Override
+    public String createTransfer(NewTransferDto transfer, Principal principal) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String removeCash(String amount, Principal principal, BindingResult bindingResult) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

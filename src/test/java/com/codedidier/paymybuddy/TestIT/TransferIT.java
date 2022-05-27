@@ -121,7 +121,7 @@ public class TransferIT {
     public void createTransfer() throws Exception {
 
         // When valid
-        NewTransferDto transferDto1 = new NewTransferDto("mail3@mail.com", 21.3, "bordures");
+        NewTransferDto transferDto1 = new NewTransferDto("mail3@mail.com", 21.30, "bordures");
 
         String urlEncoded1 = "creditorEmail="
                 + transferDto1.getCreditorEmail()
@@ -145,7 +145,7 @@ public class TransferIT {
         Assertions.assertThat(check.getDebtorId()).isEqualTo(2);
 
         // When amount>debtorBalance
-        NewTransferDto transferDto2 = new NewTransferDto("mail3@mail.com", 9999999, "erreur");
+        NewTransferDto transferDto2 = new NewTransferDto("mail3@mail.com", 9999999.00, "erreur");
 
         String urlEncoded2 = "creditorEmail="
                 + transferDto2.getCreditorEmail()

@@ -92,6 +92,13 @@
 
             <input id="phone" type="text" name="phone" th:placeholder="${theUser.phone}" class="form-control"/>
         </div>
+              <!--    address number  -->
+        <div style="margin-bottom: 20px" class="input-group w-50">
+            <label for="addressNumber" class="input-group-text w-25 justify-content-center">Address Number</label>
+
+            <input id="addressNumber" type="text" name="addressNumber" th:placeholder="${theUser.addressNumber}"
+                   class="form-control"/>
+        </div>
         <!--    address prefix  -->
         <div style="margin-bottom: 20px" class="input-group w-50">
             <label for="addressPrefix" class="input-group-text w-25 justify-content-center">Address Prefix</label>
@@ -99,13 +106,7 @@
             <input id="addressPrefix" type="text" name="addressPrefix" th:placeholder="${theUser.addressPrefix}"
                    class="form-control"/>
         </div>
-        <!--    address number  -->
-        <div style="margin-bottom: 20px" class="input-group w-50">
-            <label for="addressNumber" class="input-group-text w-25 justify-content-center">Address Number</label>
-
-            <input id="addressNumber" type="text" name="addressNumber" th:placeholder="${theUser.addressNumber}"
-                   class="form-control"/>
-        </div>
+  
         <!--    address street  -->
         <div style="margin-bottom: 20px" class="input-group w-50">
             <label for="addressStreet" class="input-group-text w-25 justify-content-center">Address Street</label>
@@ -123,6 +124,8 @@
             <label for="city" class="input-group-text w-25 justify-content-center">City</label>
             <input id="city" type="text" name="city" th:placeholder="${theUser.city}" class="form-control"/>
         </div>
+        
+
 
 <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
     <input hidden type="submit" value="Sign Out"/>

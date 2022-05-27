@@ -75,9 +75,4 @@ public class GetTransferDto {
         return "GetTransferDto{" + "contactName='" + contactName + '\'' + ", description='" + description
                 + '\'' + ", amount=" + amount + '}';
     }
-
-    public static String getEmail() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

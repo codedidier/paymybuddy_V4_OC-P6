@@ -78,9 +78,6 @@ class TransferServiceImplTest {
         // valeur déjà présente
         user.setBalance(balance);
         // WHEN
-        // mock des appels au repo
-
-        // appel du service
 
         // THEN
         // verif que l'exception est bien lancée
