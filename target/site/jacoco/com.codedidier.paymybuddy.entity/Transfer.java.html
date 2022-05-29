@@ -41,6 +41,21 @@ public class Transfer {
     @Column(name = &quot;amount&quot;)
     private BigDecimal amount;
 
+    @Column(name = &quot;charge&quot;)
+    private BigDecimal charge;
+
+    public BigDecimal getCharge() {
+<span class="nc" id="L48">        return charge;</span>
+    }
+
+    public void setCharge(BigDecimal charge) {
+<span class="fc" id="L52">        this.charge = charge;</span>
+<span class="fc" id="L53">    }</span>
+
+    public void setDate(LocalDateTime date) {
+<span class="nc" id="L56">        this.date = date;</span>
+<span class="nc" id="L57">    }</span>
+
     @Column(name = &quot;date&quot;)
     private LocalDateTime date;
 
@@ -52,79 +67,79 @@ public class Transfer {
     @JoinColumn(name = &quot;user_creditor_id&quot;, updatable = false, insertable = false)
     private User creditor;
 
-<span class="fc" id="L55">    public Transfer() {</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L70">    public Transfer() {</span>
+<span class="fc" id="L71">    }</span>
 
     public int getId() {
-<span class="fc" id="L59">        return id;</span>
+<span class="fc" id="L74">        return id;</span>
     }
 
     public void setId(int id) {
-<span class="fc" id="L63">        this.id = id;</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L78">        this.id = id;</span>
+<span class="fc" id="L79">    }</span>
 
     public int getDebtorId() {
-<span class="fc" id="L67">        return debtorId;</span>
+<span class="fc" id="L82">        return debtorId;</span>
     }
 
     public void setDebtorId(int debtorId) {
-<span class="fc" id="L71">        this.debtorId = debtorId;</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L86">        this.debtorId = debtorId;</span>
+<span class="fc" id="L87">    }</span>
 
     public int getCreditorId() {
-<span class="nc" id="L75">        return creditorId;</span>
+<span class="nc" id="L90">        return creditorId;</span>
     }
 
     public void setCreditorId(int creditorId) {
-<span class="fc" id="L79">        this.creditorId = creditorId;</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L94">        this.creditorId = creditorId;</span>
+<span class="fc" id="L95">    }</span>
 
     public String getDescription() {
-<span class="fc" id="L83">        return description;</span>
+<span class="fc" id="L98">        return description;</span>
     }
 
     public void setDescription(String description) {
-<span class="fc" id="L87">        this.description = description;</span>
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L102">        this.description = description;</span>
+<span class="fc" id="L103">    }</span>
 
     public BigDecimal getAmount() {
-<span class="fc" id="L91">        return amount;</span>
+<span class="fc" id="L106">        return amount;</span>
     }
 
     public void setAmount(BigDecimal amount) {
-<span class="fc" id="L95">        this.amount = amount;</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L110">        this.amount = amount;</span>
+<span class="fc" id="L111">    }</span>
 
     public LocalDateTime getDate() {
-<span class="nc" id="L99">        return date;</span>
+<span class="nc" id="L114">        return date;</span>
     }
 
     @PrePersist
     public void setDate() {
-<span class="fc" id="L104">        date = LocalDateTime.now();</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L119">        date = LocalDateTime.now();</span>
+<span class="fc" id="L120">    }</span>
 
     public User getDebtor() {
-<span class="fc" id="L108">        return debtor;</span>
+<span class="fc" id="L123">        return debtor;</span>
     }
 
     public void setDebtor(User debtor) {
-<span class="fc" id="L112">        this.debtor = debtor;</span>
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L127">        this.debtor = debtor;</span>
+<span class="fc" id="L128">    }</span>
 
     public User getCreditor() {
-<span class="fc" id="L116">        return creditor;</span>
+<span class="fc" id="L131">        return creditor;</span>
     }
 
     public void setCreditor(User creditor) {
-<span class="fc" id="L120">        this.creditor = creditor;</span>
-<span class="fc" id="L121">    }</span>
+<span class="fc" id="L135">        this.creditor = creditor;</span>
+<span class="fc" id="L136">    }</span>
 
     @Override
     public String toString() {
-<span class="nc" id="L125">        return &quot;Transfer{&quot; + &quot;id=&quot; + id + &quot;, debtorId=&quot; + debtorId + &quot;, creditorId=&quot; + creditorId + &quot;, description='&quot;</span>
-                + description
-                + '\'' + &quot;, amount=&quot; + amount + &quot;, date=&quot; + date + '}';
+<span class="nc" id="L140">        return &quot;Transfer [id=&quot; + id + &quot;, debtorId=&quot; + debtorId + &quot;, creditorId=&quot; + creditorId + &quot;, description=&quot;</span>
+                + description + &quot;, amount=&quot; + amount + &quot;, charge=&quot; + charge + &quot;, date=&quot; + date + &quot;, debtor=&quot; + debtor
+                + &quot;, creditor=&quot; + creditor + &quot;]&quot;;
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

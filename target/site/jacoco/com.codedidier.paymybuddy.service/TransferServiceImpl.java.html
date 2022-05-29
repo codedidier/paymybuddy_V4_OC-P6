@@ -156,7 +156,7 @@ public class TransferServiceImpl implements TransferService {
 <span class="fc" id="L156">            throw new IllegalContactException(</span>
 <span class="fc" id="L157">                    &quot;Error - User: &quot; + newTransferDto.getCreditorEmail() + &quot; NOT in contacts.&quot;);</span>
         }
-        // add charge to appAccount
+        // add charge to appAccount User1
 <span class="fc" id="L160">        User app = userRepository.getById(1);</span>
 <span class="fc" id="L161">        app.setBalance(app.getBalance().add(charge));</span>
 
@@ -171,21 +171,22 @@ public class TransferServiceImpl implements TransferService {
 <span class="fc" id="L171">        transfer.setCreditorId(creditor.getId());</span>
 <span class="fc" id="L172">        transfer.setDebtorId(debtor.getId());</span>
 <span class="fc" id="L173">        transfer.setAmount(amount);</span>
-<span class="fc" id="L174">        transfer.setDescription(newTransferDto.getDescription());</span>
+<span class="fc" id="L174">        transfer.setCharge(charge);</span>
+<span class="fc" id="L175">        transfer.setDescription(newTransferDto.getDescription());</span>
 
         // save in repository
-<span class="fc" id="L177">        log.info(&quot;Saving Charge - charge : &quot; + charge);</span>
-<span class="fc" id="L178">        userRepository.save(app);</span>
+<span class="fc" id="L178">        log.info(&quot;Saving Charge - charge : &quot; + charge);</span>
+<span class="fc" id="L179">        userRepository.save(app);</span>
 
-<span class="fc" id="L180">        log.info(&quot;Updating creditor and debtor.&quot;);</span>
-<span class="fc" id="L181">        userRepository.save(creditor);</span>
-<span class="fc" id="L182">        userRepository.save(debtor);</span>
+<span class="fc" id="L181">        log.info(&quot;Updating creditor and debtor.&quot;);</span>
+<span class="fc" id="L182">        userRepository.save(creditor);</span>
+<span class="fc" id="L183">        userRepository.save(debtor);</span>
 
-<span class="fc" id="L184">        log.info(&quot;Saving transfer.&quot;);</span>
-<span class="fc" id="L185">        transferRepository.save(transfer);</span>
+<span class="fc" id="L185">        log.info(&quot;Saving transfer.&quot;);</span>
+<span class="fc" id="L186">        transferRepository.save(transfer);</span>
 
-<span class="fc" id="L187">        return new GetTransferDto(</span>
-<span class="fc" id="L188">                creditor.getFirstName(), transfer.getDescription(), transfer.getAmount());</span>
+<span class="fc" id="L188">        return new GetTransferDto(</span>
+<span class="fc" id="L189">                creditor.getFirstName(), transfer.getDescription(), transfer.getAmount());</span>
     }
 
     /**
@@ -196,32 +197,32 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public List&lt;GetTransferDto&gt; getTransfers(String userEmail) {
 
-<span class="fc" id="L199">        log.info(&quot;Getting transfer for user : &quot; + userEmail);</span>
+<span class="fc" id="L200">        log.info(&quot;Getting transfer for user : &quot; + userEmail);</span>
 
-<span class="fc" id="L201">        Optional&lt;User&gt; userOp = userRepository.findByEmail(userEmail);</span>
+<span class="fc" id="L202">        Optional&lt;User&gt; userOp = userRepository.findByEmail(userEmail);</span>
 
-<span class="fc" id="L203">        int userId = 0;</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (userOp.isPresent()) {</span>
-<span class="fc" id="L205">            userId = userOp.get().getId();</span>
+<span class="fc" id="L204">        int userId = 0;</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        if (userOp.isPresent()) {</span>
+<span class="fc" id="L206">            userId = userOp.get().getId();</span>
         }
 
-<span class="fc" id="L208">        List&lt;GetTransferDto&gt; transactions = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L209">        log.info(&quot;Getting transaction as creditor - id: &quot; + userId);</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Transfer transfer : transferRepository.findAllByCreditorId(userId)) {</span>
-<span class="fc" id="L211">            GetTransferDto temp = new GetTransferDto(</span>
-<span class="fc" id="L212">                    transfer.getDebtor().getFirstName(), transfer.getDescription(), transfer.getAmount());</span>
-<span class="fc" id="L213">            transactions.add(temp);</span>
-<span class="fc" id="L214">        }</span>
-<span class="fc" id="L215">        log.info(&quot;Getting transaction as debtor - id: &quot; + userId);</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">        for (Transfer transfer : transferRepository.findAllByDebtorId(userId)) {</span>
-<span class="fc" id="L217">            GetTransferDto temp = new GetTransferDto(</span>
-<span class="fc" id="L218">                    transfer.getCreditor().getFirstName(),</span>
-<span class="fc" id="L219">                    transfer.getDescription(),</span>
-<span class="fc" id="L220">                    transfer.getAmount().negate());</span>
-<span class="fc" id="L221">            transactions.add(temp);</span>
-<span class="fc" id="L222">        }</span>
-<span class="fc" id="L223">        log.info(&quot;User: &quot; + userId + &quot; - &quot; + transactions.size() + &quot; transactions.&quot;);</span>
-<span class="fc" id="L224">        return transactions;</span>
+<span class="fc" id="L209">        List&lt;GetTransferDto&gt; transactions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L210">        log.info(&quot;Getting transaction as creditor - id: &quot; + userId);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        for (Transfer transfer : transferRepository.findAllByCreditorId(userId)) {</span>
+<span class="fc" id="L212">            GetTransferDto temp = new GetTransferDto(</span>
+<span class="fc" id="L213">                    transfer.getDebtor().getFirstName(), transfer.getDescription(), transfer.getAmount());</span>
+<span class="fc" id="L214">            transactions.add(temp);</span>
+<span class="fc" id="L215">        }</span>
+<span class="fc" id="L216">        log.info(&quot;Getting transaction as debtor - id: &quot; + userId);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        for (Transfer transfer : transferRepository.findAllByDebtorId(userId)) {</span>
+<span class="fc" id="L218">            GetTransferDto temp = new GetTransferDto(</span>
+<span class="fc" id="L219">                    transfer.getCreditor().getFirstName(),</span>
+<span class="fc" id="L220">                    transfer.getDescription(),</span>
+<span class="fc" id="L221">                    transfer.getAmount().negate());</span>
+<span class="fc" id="L222">            transactions.add(temp);</span>
+<span class="fc" id="L223">        }</span>
+<span class="fc" id="L224">        log.info(&quot;User: &quot; + userId + &quot; - &quot; + transactions.size() + &quot; transactions.&quot;);</span>
+<span class="fc" id="L225">        return transactions;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
