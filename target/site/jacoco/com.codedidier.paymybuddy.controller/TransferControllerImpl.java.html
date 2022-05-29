@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransferControllerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.controller</a> &gt; <span class="el_source">TransferControllerImpl.java</span></div><h1>TransferControllerImpl.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.controller;
+
+import java.security.Principal;
+import java.util.Collection;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.codedidier.paymybuddy.dto.ContactDto;
+import com.codedidier.paymybuddy.dto.GetTransferDto;
+import com.codedidier.paymybuddy.dto.NewTransferDto;
+import com.codedidier.paymybuddy.service.TransferService;
+import com.codedidier.paymybuddy.service.UserService;
+
+/**
+ * Implementation for TransferController.
+ *
+ * &lt;p&gt;
+ * Contains method to add/remove currency from user balance. Contains method to
+ * create a new transaction and get all transfer for the authenticated user.
+ */
+@Controller
+@RequestMapping(&quot;/home&quot;)
+<span class="fc" id="L38">public class TransferControllerImpl implements TransferController {</span>
+<span class="fc" id="L39">    private final Logger log = LogManager.getLogger(getClass().getName());</span>
+    @Autowired
+    TransferService transferService;
+    @Autowired
+    UserService userService;
+
+    /**
+     * this method will add cash to the current user balance.
+     *
+     * @param amount    of money to add
+     * @param principal the current user
+     * @return success page
+     */
+    @Override
+    @PostMapping(value = &quot;/balance/add&quot;, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String addCash(@RequestParam int amount, Principal principal) {
+
+<span class="fc" id="L57">        String userEmail = principal.getName();</span>
+
+        // call service
+<span class="fc" id="L60">        transferService.addCash(amount, userEmail);</span>
+
+<span class="fc" id="L62">        log.info(&quot;Successfully added : &quot; + amount + &quot; for user : &quot; + userEmail);</span>
+
+        // return view
+<span class="fc" id="L65">        return &quot;success&quot;;</span>
+    }
+
+    /**
+     * this method will remove cash from the current user balance.
+     *
+     * @param amount    of money to remove
+     * @param principal the current user
+     * @return success page
+     */
+    @Override
+    @PostMapping(value = &quot;/balance/remove&quot;, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String removeCash(@RequestParam String amount, Principal principal) {
+
+<span class="fc" id="L80">        String userEmail = principal.getName();</span>
+
+        // call service
+<span class="fc" id="L83">        transferService.removeCash(amount, userEmail);</span>
+<span class="fc" id="L84">        log.info(&quot;Successfully removed : &quot; + amount + &quot; for user : &quot; + userEmail);</span>
+        // return view
+<span class="fc" id="L86">        return &quot;success&quot;;</span>
+    }
+
+    /**
+     * This method will create a new transfer for the current user and the given
+     * contact.
+     *
+     * @param newTransfer Dto with creditorEmail, amount, description
+     * @param principal   the current user (debtor)
+     * @return success page
+     */
+    @Override
+    @PostMapping(value = &quot;/transfer&quot;, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createTransfer(
+            @Valid @ModelAttribute(&quot;newTransfer&quot;) NewTransferDto newTransfer, Principal principal) {
+
+        // add principal to dto
+<span class="fc" id="L104">        newTransfer.setDebtorEmail(principal.getName());</span>
+
+<span class="fc" id="L106">        log.info(&quot;Creating new transfer - amount : &quot; + newTransfer.getAmount()</span>
+<span class="fc" id="L107">                + &quot; - debtor : &quot; + newTransfer.getDebtorEmail()</span>
+<span class="fc" id="L108">                + &quot; - creditor : &quot; + newTransfer.getCreditorEmail());</span>
+        // call service
+<span class="fc" id="L110">        transferService.createTransfer(newTransfer);</span>
+        // redirect to getTransfer page
+<span class="fc" id="L112">        log.info(&quot;Transfer accepted&quot;);</span>
+<span class="fc" id="L113">        return &quot;success&quot;;</span>
+    }
+
+    /**
+     * This method will get all the transfer of the current user.
+     *
+     * @param principal the current user
+     * @return the view for transfer
+     */
+    @Override
+    @GetMapping(&quot;/transfer&quot;)
+    public String getTransfers(Model model, Principal principal) {
+<span class="fc" id="L125">        log.info(&quot;Getting all transfer for user : &quot; + principal.getName());</span>
+<span class="fc" id="L126">        List&lt;GetTransferDto&gt; transfers = transferService.getTransfers(principal.getName());</span>
+<span class="fc" id="L127">        model.addAttribute(&quot;transfers&quot;, transfers);</span>
+<span class="fc" id="L128">        Collection&lt;ContactDto&gt; contacts = userService.getAllContact(principal.getName());</span>
+<span class="fc" id="L129">        model.addAttribute(&quot;contacts&quot;, contacts);</span>
+<span class="fc" id="L130">        log.trace(&quot;user : &quot; + principal.getName() + &quot; have : &quot; + transfers.size() + &quot; transfers.&quot;);</span>
+<span class="fc" id="L131">        return &quot;transfer-home&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

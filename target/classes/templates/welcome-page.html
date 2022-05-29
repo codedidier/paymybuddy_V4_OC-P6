@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Pay my Buddy!</title>
+    <!--    Bootstrap ref   -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+</head>
+
+<body class="container">
+<div id="Welcome-page" style="margin-top: 50px;"
+         class="mainContainer col-md-0 col-md-offset-0 col-sm-0 col-sm-offset-0 "    >
+<div class="panel panel-info">
+            <div style="text-align: center; color: wheat; text-shadow: 1px 1px mediumseagreen; padding:2px;border-radius: 5px 5px 0 0;background: linear-gradient(90deg, rgba(70,181,101,1) 35%, rgba(127,192,90,1) 100%)" class="panel-title"><h3>Pay My Buddy</h3></div>
+        </div>
+</div>
+<div>
+
+    <h3>Votre application de transfer d'argent entre amis</h3>
+
+</div>
+<p>
+    <a th:href="@{/showLoginPage}" class="btn btn-primary">Démarrer</a>
+</p>
+</body>
+</html>

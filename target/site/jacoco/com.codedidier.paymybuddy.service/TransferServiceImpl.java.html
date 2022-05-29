@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransferServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.service</a> &gt; <span class="el_source">TransferServiceImpl.java</span></div><h1>TransferServiceImpl.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.codedidier.paymybuddy.constants.Fare;
+import com.codedidier.paymybuddy.dto.GetTransferDto;
+import com.codedidier.paymybuddy.dto.NewTransferDto;
+import com.codedidier.paymybuddy.entity.Transfer;
+import com.codedidier.paymybuddy.entity.User;
+import com.codedidier.paymybuddy.exception.BadArgumentException;
+import com.codedidier.paymybuddy.exception.DataNotFindException;
+import com.codedidier.paymybuddy.exception.IllegalContactException;
+import com.codedidier.paymybuddy.exception.InvalidBalanceException;
+import com.codedidier.paymybuddy.repository.TransferRepository;
+import com.codedidier.paymybuddy.repository.UserRepository;
+
+/**
+ * Implementation for transferService. Contain some method to add/remove
+ * currency from user balance. Contain some method to create/get transfer.
+ */
+@Service
+public class TransferServiceImpl implements TransferService {
+
+    private final UserRepository userRepository;
+    private final TransferRepository transferRepository;
+<span class="fc" id="L36">    private final Logger log = LogManager.getLogger(getClass().getName());</span>
+
+    @Autowired
+<span class="fc" id="L39">    public TransferServiceImpl(UserRepository userRepository, TransferRepository transferRepository) {</span>
+<span class="fc" id="L40">        this.userRepository = userRepository;</span>
+<span class="fc" id="L41">        this.transferRepository = transferRepository;</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * This method will add some cash to User balance.
+     *
+     * @param theAmount the integer to add
+     */
+    @Override
+    public void addCash(int theAmount, String email) {
+
+        // Check amount &gt; 0
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (theAmount &lt; 1) {</span>
+<span class="fc" id="L54">            log.warn(&quot;KO - Amount must be &gt; 0. Amount : &quot; + theAmount);</span>
+<span class="fc" id="L55">            throw new BadArgumentException(&quot;KO - Amount must be &gt; 0.&quot;);</span>
+        }
+        // Get User
+
+<span class="fc" id="L59">        Optional&lt;User&gt; userOptional = userRepository.findByEmail(email);</span>
+
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (userOptional.isEmpty()) {</span>
+<span class="nc" id="L62">            log.warn(&quot;KO - Can't find user: &quot; + email);</span>
+<span class="nc" id="L63">            throw new DataNotFindException(&quot;KO - Can't find user: &quot; + email);</span>
+        }
+
+<span class="fc" id="L66">        BigDecimal amount = BigDecimal.valueOf(theAmount).setScale(3, RoundingMode.HALF_DOWN);</span>
+<span class="fc" id="L67">        User user = userOptional.get();</span>
+<span class="fc" id="L68">        log.info(&quot;Adding amount : &quot; + amount + &quot; to user balance : &quot; + email);</span>
+        // Add Amount
+<span class="fc" id="L70">        BigDecimal userBalance = user.getBalance();</span>
+
+<span class="fc" id="L72">        user.setBalance(amount.add(userBalance));</span>
+<span class="fc" id="L73">        log.trace(&quot;UserBalance : &quot; + userBalance);</span>
+<span class="fc" id="L74">        log.trace(&quot;Final user balance : &quot; + user.getBalance());</span>
+        // save
+<span class="fc" id="L76">        userRepository.save(user);</span>
+<span class="fc" id="L77">        log.info(&quot;Succressfully added &quot; + amount + &quot; to user : &quot; + email);</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * This method will remove some cash to User balance.
+     *
+     * @param theAmount the integer to subtract
+     */
+    @Override
+    public void removeCash(String theAmount, String email) {
+        // Check theAmount &gt; 0
+<span class="fc" id="L88">        BigDecimal amount = new BigDecimal(theAmount).setScale(3, RoundingMode.HALF_DOWN);</span>
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (amount.signum() &lt;= 0) {</span>
+<span class="fc" id="L91">            log.warn(&quot;KO - Amount must be &gt; 0.&quot;);</span>
+<span class="fc" id="L92">            throw new BadArgumentException(&quot;KO - Amount must be &gt; 0.&quot;);</span>
+        }
+        // Get User
+<span class="fc" id="L95">        Optional&lt;User&gt; userOptional = userRepository.findByEmail(email);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (userOptional.isEmpty()) {</span>
+<span class="nc" id="L97">            log.warn(&quot;KO - Can't find user: &quot; + email);</span>
+<span class="nc" id="L98">            throw new DataNotFindException(&quot;KO - Can't find user: &quot; + email);</span>
+        }
+        // Check User Balance
+<span class="fc" id="L101">        User user = userOptional.get();</span>
+<span class="fc" id="L102">        BigDecimal userBalance = user.getBalance().setScale(3, RoundingMode.HALF_DOWN);</span>
+<span class="fc" id="L103">        log.trace(&quot;User balance = &quot; + userBalance);</span>
+<span class="fc" id="L104">        BigDecimal checkResult = userBalance.subtract(amount);</span>
+        // Add Amount and Check if initialBalance + theAmount &lt; Integer.MAX
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (checkResult.signum() &gt;= 0) {</span>
+<span class="fc" id="L107">            user.setBalance(checkResult.setScale(3, RoundingMode.HALF_DOWN));</span>
+
+            // save
+<span class="fc" id="L110">            userRepository.save(user);</span>
+<span class="fc" id="L111">            log.info(&quot;Successfully removed &quot; + theAmount + &quot; from balance.&quot;);</span>
+        } else {
+<span class="fc" id="L113">            log.warn(&quot;Error - Balance can't be negative. Balance : &quot; + checkResult);</span>
+<span class="fc" id="L114">            throw new InvalidBalanceException(&quot;Error - Balance can't be negative.&quot;);</span>
+        }
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * This method will create a new Transfer between two user.
+     *
+     * @param newTransferDto dto with creditorEmail, debtorEmail, amount and
+     *                       description
+     */
+    @Override
+    @Transactional
+    public GetTransferDto createTransfer(NewTransferDto newTransferDto) {
+
+<span class="fc" id="L128">        log.info(&quot;Creating new transfer - &quot; + newTransferDto);</span>
+        // get user (debtor)
+<span class="fc" id="L130">        Optional&lt;User&gt; opUser = userRepository.findByEmail(newTransferDto.getDebtorEmail());</span>
+<span class="fc" id="L131">        User debtor = new User();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (opUser.isPresent()) {</span>
+<span class="fc" id="L133">            debtor = opUser.get();</span>
+        }
+
+<span class="fc" id="L136">        BigDecimal amount = BigDecimal.valueOf(newTransferDto.getAmount());</span>
+
+<span class="fc" id="L138">        BigDecimal charge = amount.multiply(Fare.TRANSACTION_FARE);</span>
+
+        // check user balance
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (debtor.getBalance().compareTo(amount.add(charge)) &lt; 0) {</span>
+<span class="fc" id="L142">            log.warn(&quot;Error InvalidBalanceException - Amount &gt; balance for user : &quot; + debtor.getEmail());</span>
+<span class="fc" id="L143">            throw new InvalidBalanceException(&quot;Error - Amount &gt; balance for user : &quot; + debtor.getEmail());</span>
+        }
+
+        // check if creditor is part of contacts
+<span class="fc" id="L147">        User creditor = new User();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        for (User contact : debtor.getContacts()) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">            if (contact.getEmail().equals(newTransferDto.getCreditorEmail())) {</span>
+<span class="fc" id="L150">                creditor = contact;</span>
+            }
+<span class="fc" id="L152">        }</span>
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (creditor.getEmail() == null) {</span>
+<span class="fc" id="L155">            log.warn(&quot;Error - User: &quot; + newTransferDto.getCreditorEmail() + &quot; NOT in contacts.&quot;);</span>
+<span class="fc" id="L156">            throw new IllegalContactException(</span>
+<span class="fc" id="L157">                    &quot;Error - User: &quot; + newTransferDto.getCreditorEmail() + &quot; NOT in contacts.&quot;);</span>
+        }
+        // add charge to appAccount
+<span class="fc" id="L160">        User app = userRepository.getById(1);</span>
+<span class="fc" id="L161">        app.setBalance(app.getBalance().add(charge));</span>
+
+        // add amount to contact
+<span class="fc" id="L164">        creditor.setBalance(creditor.getBalance().add(amount));</span>
+
+        // remove amount from user
+<span class="fc" id="L167">        debtor.setBalance(debtor.getBalance().subtract(amount.add(charge)));</span>
+
+        // create entity Transfer
+<span class="fc" id="L170">        Transfer transfer = new Transfer();</span>
+<span class="fc" id="L171">        transfer.setCreditorId(creditor.getId());</span>
+<span class="fc" id="L172">        transfer.setDebtorId(debtor.getId());</span>
+<span class="fc" id="L173">        transfer.setAmount(amount);</span>
+<span class="fc" id="L174">        transfer.setDescription(newTransferDto.getDescription());</span>
+
+        // save in repository
+<span class="fc" id="L177">        log.info(&quot;Saving Charge - charge : &quot; + charge);</span>
+<span class="fc" id="L178">        userRepository.save(app);</span>
+
+<span class="fc" id="L180">        log.info(&quot;Updating creditor and debtor.&quot;);</span>
+<span class="fc" id="L181">        userRepository.save(creditor);</span>
+<span class="fc" id="L182">        userRepository.save(debtor);</span>
+
+<span class="fc" id="L184">        log.info(&quot;Saving transfer.&quot;);</span>
+<span class="fc" id="L185">        transferRepository.save(transfer);</span>
+
+<span class="fc" id="L187">        return new GetTransferDto(</span>
+<span class="fc" id="L188">                creditor.getFirstName(), transfer.getDescription(), transfer.getAmount());</span>
+    }
+
+    /**
+     * This method will get all transfer for the given user.
+     *
+     * @param userEmail the email of the current user.
+     */
+    @Override
+    public List&lt;GetTransferDto&gt; getTransfers(String userEmail) {
+
+<span class="fc" id="L199">        log.info(&quot;Getting transfer for user : &quot; + userEmail);</span>
+
+<span class="fc" id="L201">        Optional&lt;User&gt; userOp = userRepository.findByEmail(userEmail);</span>
+
+<span class="fc" id="L203">        int userId = 0;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (userOp.isPresent()) {</span>
+<span class="fc" id="L205">            userId = userOp.get().getId();</span>
+        }
+
+<span class="fc" id="L208">        List&lt;GetTransferDto&gt; transactions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L209">        log.info(&quot;Getting transaction as creditor - id: &quot; + userId);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Transfer transfer : transferRepository.findAllByCreditorId(userId)) {</span>
+<span class="fc" id="L211">            GetTransferDto temp = new GetTransferDto(</span>
+<span class="fc" id="L212">                    transfer.getDebtor().getFirstName(), transfer.getDescription(), transfer.getAmount());</span>
+<span class="fc" id="L213">            transactions.add(temp);</span>
+<span class="fc" id="L214">        }</span>
+<span class="fc" id="L215">        log.info(&quot;Getting transaction as debtor - id: &quot; + userId);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        for (Transfer transfer : transferRepository.findAllByDebtorId(userId)) {</span>
+<span class="fc" id="L217">            GetTransferDto temp = new GetTransferDto(</span>
+<span class="fc" id="L218">                    transfer.getCreditor().getFirstName(),</span>
+<span class="fc" id="L219">                    transfer.getDescription(),</span>
+<span class="fc" id="L220">                    transfer.getAmount().negate());</span>
+<span class="fc" id="L221">            transactions.add(temp);</span>
+<span class="fc" id="L222">        }</span>
+<span class="fc" id="L223">        log.info(&quot;User: &quot; + userId + &quot; - &quot; + transactions.size() + &quot; transactions.&quot;);</span>
+<span class="fc" id="L224">        return transactions;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

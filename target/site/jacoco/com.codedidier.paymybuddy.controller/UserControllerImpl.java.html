@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserControllerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.controller</a> &gt; <span class="el_source">UserControllerImpl.java</span></div><h1>UserControllerImpl.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.controller;
+
+import java.security.Principal;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.codedidier.paymybuddy.dto.GetUserAccountDto;
+import com.codedidier.paymybuddy.entity.User;
+import com.codedidier.paymybuddy.model.UserModel;
+import com.codedidier.paymybuddy.service.UserService;
+
+/**
+ * Controller for User account administration.
+ *
+ * &lt;p&gt;
+ * Contains method to delete or update the user account.
+ */
+
+@Controller
+@RequestMapping(&quot;/home&quot;)
+<span class="fc" id="L33">public class UserControllerImpl implements UserController {</span>
+
+<span class="fc" id="L35">    private final Logger log = LogManager.getLogger(getClass().getName());</span>
+    @Autowired
+    private UserService userService;
+
+    /**
+     * This method will delete an user account.
+     *
+     * @param id the id of the user to delete.
+     * @return confirmation message.
+     */
+    @Override
+    @DeleteMapping(&quot;/user&quot;)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String deleteUser(@RequestParam int id) {
+
+<span class="fc" id="L50">        log.info(&quot;Deleting User with id : &quot; + id);</span>
+<span class="fc" id="L51">        userService.deleteUserById(id);</span>
+<span class="fc" id="L52">        log.info(&quot;OK - user deleted.&quot;);</span>
+<span class="fc" id="L53">        return &quot;plain-login&quot;;</span>
+    }
+
+    /**
+     * This method will update the account of the given user.
+     *
+     * @param theUser the user to update.
+     * @return confirmation message
+     */
+    @Override
+    @PutMapping(&quot;/user&quot;)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String updateUser(UserModel theUser) {
+
+<span class="fc" id="L67">        log.info(&quot;Updating User : &quot; + theUser.getId());</span>
+<span class="fc" id="L68">        userService.update(theUser);</span>
+<span class="fc" id="L69">        log.info(&quot;OK - user updated.&quot;);</span>
+
+<span class="fc" id="L71">        return &quot;success&quot;;</span>
+    }
+
+    /**
+     * This method will return the home page of the current user if authenticated.
+     * Else -&gt; redirect to login page.
+     *
+     * @param principal the current authenticated user.
+     * @param model     the user information saved.
+     * @return the html page for user account
+     */
+    @Override
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public String getUserAccount(Principal principal, Model model) {
+
+<span class="fc" id="L87">        String email = principal.getName();</span>
+<span class="fc" id="L88">        User user = userService.findByEmail(email).get();</span>
+<span class="fc" id="L89">        GetUserAccountDto theUser = new GetUserAccountDto();</span>
+<span class="fc" id="L90">        BeanUtils.copyProperties(user, theUser, &quot;password&quot;);</span>
+<span class="fc" id="L91">        model.addAttribute(&quot;theUser&quot;, theUser);</span>
+
+<span class="fc" id="L93">        log.info(&quot;Getting user account for user : &quot; + email);</span>
+
+<span class="fc" id="L95">        return &quot;home&quot;;</span>
+    }
+
+    /**
+     * This method will return the html form to update the current user.
+     *
+     * @param principal the current user.
+     * @param model     the user account.
+     * @return the html form.
+     */
+    @Override
+    @GetMapping(&quot;/profile&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    public String getUserProfile(Principal principal, Model model) {
+
+<span class="fc" id="L110">        String email = principal.getName();</span>
+
+<span class="fc" id="L112">        log.info(&quot;Getting user account for user : &quot; + email);</span>
+
+<span class="fc" id="L114">        User user = userService.findByEmail(email).get();</span>
+<span class="fc" id="L115">        GetUserAccountDto theUser = new GetUserAccountDto();</span>
+<span class="fc" id="L116">        BeanUtils.copyProperties(user, theUser, &quot;password&quot;);</span>
+<span class="fc" id="L117">        model.addAttribute(&quot;theUser&quot;, theUser);</span>
+
+<span class="fc" id="L119">        return &quot;edit-user-profile&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transfer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">paymybuddy</a> &gt; <a href="index.source.html" class="el_package">com.codedidier.paymybuddy.entity</a> &gt; <span class="el_source">Transfer.java</span></div><h1>Transfer.java</h1><pre class="source lang-java linenums">package com.codedidier.paymybuddy.entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+
+/**
+ * Entity for transaction table.
+ *
+ * &lt;p&gt;
+ * PK = id
+ */
+@Entity
+@Table(name = &quot;transaction&quot;)
+public class Transfer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;id&quot;, nullable = false)
+    private int id;
+
+    @Column(name = &quot;user_debtor_id&quot;)
+    private int debtorId;
+
+    @Column(name = &quot;user_creditor_id&quot;)
+    private int creditorId;
+
+    @Column(name = &quot;description&quot;)
+    private String description;
+
+    @Column(name = &quot;amount&quot;)
+    private BigDecimal amount;
+
+    @Column(name = &quot;date&quot;)
+    private LocalDateTime date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;user_debtor_id&quot;, updatable = false, insertable = false)
+    private User debtor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;user_creditor_id&quot;, updatable = false, insertable = false)
+    private User creditor;
+
+<span class="fc" id="L55">    public Transfer() {</span>
+<span class="fc" id="L56">    }</span>
+
+    public int getId() {
+<span class="fc" id="L59">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L63">        this.id = id;</span>
+<span class="fc" id="L64">    }</span>
+
+    public int getDebtorId() {
+<span class="fc" id="L67">        return debtorId;</span>
+    }
+
+    public void setDebtorId(int debtorId) {
+<span class="fc" id="L71">        this.debtorId = debtorId;</span>
+<span class="fc" id="L72">    }</span>
+
+    public int getCreditorId() {
+<span class="nc" id="L75">        return creditorId;</span>
+    }
+
+    public void setCreditorId(int creditorId) {
+<span class="fc" id="L79">        this.creditorId = creditorId;</span>
+<span class="fc" id="L80">    }</span>
+
+    public String getDescription() {
+<span class="fc" id="L83">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="fc" id="L87">        this.description = description;</span>
+<span class="fc" id="L88">    }</span>
+
+    public BigDecimal getAmount() {
+<span class="fc" id="L91">        return amount;</span>
+    }
+
+    public void setAmount(BigDecimal amount) {
+<span class="fc" id="L95">        this.amount = amount;</span>
+<span class="fc" id="L96">    }</span>
+
+    public LocalDateTime getDate() {
+<span class="nc" id="L99">        return date;</span>
+    }
+
+    @PrePersist
+    public void setDate() {
+<span class="fc" id="L104">        date = LocalDateTime.now();</span>
+<span class="fc" id="L105">    }</span>
+
+    public User getDebtor() {
+<span class="fc" id="L108">        return debtor;</span>
+    }
+
+    public void setDebtor(User debtor) {
+<span class="fc" id="L112">        this.debtor = debtor;</span>
+<span class="fc" id="L113">    }</span>
+
+    public User getCreditor() {
+<span class="fc" id="L116">        return creditor;</span>
+    }
+
+    public void setCreditor(User creditor) {
+<span class="fc" id="L120">        this.creditor = creditor;</span>
+<span class="fc" id="L121">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L125">        return &quot;Transfer{&quot; + &quot;id=&quot; + id + &quot;, debtorId=&quot; + debtorId + &quot;, creditorId=&quot; + creditorId + &quot;, description='&quot;</span>
+                + description
+                + '\'' + &quot;, amount=&quot; + amount + &quot;, date=&quot; + date + '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
