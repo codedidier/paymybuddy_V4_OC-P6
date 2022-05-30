@@ -21,7 +21,7 @@ L'application pay_my_buddy a été développée avec:
   
 ## Diagramme de classe UML  
   
-![UML Pay My Buddy] (https://github.com/codedidier/paymybuddy_V5_OC-P6/blob/main/img/UML_p6_v5.png)  
+![UML Pay My Buddy](https://github.com/codedidier/paymybuddy_V5_OC-P6/blob/main/img/UML_p6_v5.png)  
   
 --------------------------------------------------------------------  
   
