@@ -15,5 +15,5 @@ L'application pay_my_buddy a été développée avec:
     
 ## Modèle physique de données  
   
-! [MPD-pay_my_buddy-v5.png](https://github.com/codedidier/paymybuddy_V5_OC-P6/blob/main/img/MPD-pay_my_buddy-v5.png)  
+![MPD-pay_my_buddy-v5.png](https://github.com/codedidier/paymybuddy_V5_OC-P6/blob/main/img/MPD-pay_my_buddy-v5.png)  
 
