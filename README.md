@@ -1,4 +1,4 @@
-# paymybuddy_V5_OC-P6  
+# Pay My Buddy 
 __Nous rendons le transfert de votre argent facile !__
 Application de paiement entre amis
 -----------------------------------------------------  
