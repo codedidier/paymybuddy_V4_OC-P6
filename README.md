@@ -1,7 +1,7 @@
 # Pay My Buddy 
 __Nous rendons le transfert de votre argent facile !__  
-
-Application de paiement entre amis
+  
+Application de paiement entre amis  
 -----------------------------------------------------------------------  
 
 L'application pay_my_buddy a été développée avec:  
