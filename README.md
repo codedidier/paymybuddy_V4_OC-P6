@@ -5,7 +5,7 @@ Application de paiement entre amis
 
 -----------------------------------------------------------------------  
 
-L'application pay_my_buddy a été développée avec:  
+--L'application pay_my_buddy a été développée avec:--  
 * SpringBoot : 2.6.7
 * BDD : MySql Workbench 8.0
 * Java : 11
