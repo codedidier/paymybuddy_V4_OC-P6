@@ -1,7 +1,5 @@
-# paymybuddy_V5_OC-P6
-
 # paymybuddy_V5_OC-P6  
-__Nous rendons le transfert de votre argent facile !__  
+__Nous rendons le transfert de votre argent facile !__
 Application de paiement entre amis
 -----------------------------------------------------  
 
@@ -11,9 +9,12 @@ L'application pay_my_buddy a été développée avec:
 * Java : 11
 * Maven
   
-  ----------------------------------------------------  
+------------------------------------------------------  
     
 ## Modèle physique de données  
   
-![MPD-pay_my_buddy-v5.png](https://github.com/codedidier/paymybuddy_V5_OC-P6/blob/main/img/MPD-pay_my_buddy-v5.png)  
-
+![MPD pay_my_buddy](https://github.com/codedidier/paymybuddy_V5_OC-P6/blob/main/img/MPD-pay_my_buddy-v5.png) 
+  
+---------------------------------------------------------  
+  
+## Diagramme de classe UML  
